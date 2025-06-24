@@ -6,7 +6,9 @@ import 'package:film_magic/features/home/presentation/views/home_screen.dart';
 import 'package:film_magic/features/profile/presentation/views/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../../features/authentication/presentation/viewmodels/auth_viewmodel.dart';
 import '../../features/authentication/presentation/views/registration_screen.dart';
 import '../../shared/widgets/main_wrapper.dart';
 
@@ -22,7 +24,7 @@ class AppRouter {
   static final router = GoRouter(
     navigatorKey: NavKeys.rootNavKey,
     initialLocation: registrationRoute,
-    debugLogDiagnostics: false,
+    debugLogDiagnostics: true,
     routes: <RouteBase>[
       StatefulShellRoute.indexedStack(
         builder: (context, state, navShell) {
@@ -92,6 +94,32 @@ class AppRouter {
         },
       ),
     ],
+    redirect: (context, state) {
+      final authViewModel = context.read<AuthViewModel>();
+      final bool isAuthenticated = authViewModel.isAuthenticated;
+      final bool isLoading = authViewModel.isLoading;
+      final bool isLoginRoute = state.matchedLocation == registrationRoute;
+
+      print(
+        'Redirect check - Auth: $isAuthenticated, Loading: $isLoading, LoginRoute: $isLoginRoute',
+      );
+
+      // If still loading, don't redirect yet
+      if (isLoading) return null;
+
+      // If not authenticated and not on login route, redirect to login
+      if (!isAuthenticated && !isLoginRoute) {
+        return registrationRoute;
+      }
+
+      // If authenticated and on login route, redirect to home
+      if (isAuthenticated && isLoginRoute) {
+        return homeRoute;
+      }
+
+      // No redirection needed
+      return null;
+    },
     errorBuilder: (BuildContext context, GoRouterState state) {
       return Scaffold(
         appBar: AppBar(title: const Text('Page Not Found')),

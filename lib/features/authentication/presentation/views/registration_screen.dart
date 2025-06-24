@@ -1,39 +1,18 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../shared/widgets/darkened_background.dart';
+import '../viewmodels/auth_viewmodel.dart';
 
-class RegistrationScreen extends StatefulWidget {
+class RegistrationScreen extends StatelessWidget {
   const RegistrationScreen({super.key});
 
   @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
-
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-  Future<void> _signInWithGoogle() async {
-    try {
-      GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
-
-      if (googleAccount == null) {
-        throw Exception('Google sign in failed');
-      }
-
-      print('Google Account: ${googleAccount.toString()}');
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final authViewModel = context.watch<AuthViewModel>();
+
     return Stack(
       children: [
         DarkenedBackground(),
@@ -60,23 +39,37 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ],
                   ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                        child: FilledButton.icon(
-                          onPressed: () => _signInWithGoogle(),
-                          label: const Text('Continue with Google'),
-                          icon: const FaIcon(
-                            FontAwesomeIcons.google,
-                            size: 18.0,
+                if (authViewModel.isLoading)
+                  const Center(child: CircularProgressIndicator()),
+                if (!authViewModel.isLoading)
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                          child: FilledButton.icon(
+                            onPressed: () => authViewModel.signInWithGoogle(),
+                            label: const Text('Continue with Google'),
+                            icon: const FaIcon(
+                              FontAwesomeIcons.google,
+                              size: 18.0,
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                if (authViewModel.errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      authViewModel.errorMessage!,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
-                  ],
-                ),
+                  ),
               ],
             ),
           ),
