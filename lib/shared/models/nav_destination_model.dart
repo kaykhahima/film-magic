@@ -19,20 +19,20 @@ class NavDestination {
 List<NavDestination> destinations = <NavDestination>[
   NavDestination(
     label: 'Home',
-    icon: Icon(Icons.home_outlined),
-    selectedIcon: Icon(Icons.home),
+    icon: Icon(Icons.home_rounded),
+    selectedIcon: Icon(Icons.home_rounded),
     path: AppRouter.homeRoute,
   ),
   NavDestination(
     label: 'Films',
-    icon: Icon(Icons.movie_outlined),
-    selectedIcon: Icon(Icons.movie),
+    icon: Icon(Icons.movie_rounded),
+    selectedIcon: Icon(Icons.movie_rounded),
     path: AppRouter.filmsRoute,
   ),
   NavDestination(
     label: 'Profile',
-    icon: const Icon(Icons.person_outline),
-    selectedIcon: const Icon(Icons.person),
+    icon: const Icon(Icons.person_rounded),
+    selectedIcon: const Icon(Icons.person_rounded),
     path: AppRouter.profileRoute,
   ),
 ];

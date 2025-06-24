@@ -22,6 +22,8 @@ class BottomNavBar extends StatelessWidget {
         currentIndex: navShell.currentIndex,
         onTap: _onDestinationSelected,
         type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         selectedLabelStyle: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.w500,
