@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "679507587597",
+    "project_id": "film-magic",
+    "storage_bucket": "film-magic.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:679507587597:android:70a5c887ad54c547895b44",
+        "android_client_info": {
+          "package_name": "com.kaykhahima.film_magic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "679507587597-v5rs6ddq66mobodrkc9bn0cnlb3247m1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9IJPVU1qQPFG-iFbvWjilXRIkKxItrSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "679507587597-v5rs6ddq66mobodrkc9bn0cnlb3247m1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "679507587597-7kat6do7q2l43436o93vdootse29dgmu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.kaykhahima.filmMagic"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

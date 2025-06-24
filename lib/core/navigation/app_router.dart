@@ -21,7 +21,7 @@ class AppRouter {
 
   static final router = GoRouter(
     navigatorKey: NavKeys.rootNavKey,
-    initialLocation: homeRoute,
+    initialLocation: registrationRoute,
     debugLogDiagnostics: false,
     routes: <RouteBase>[
       StatefulShellRoute.indexedStack(

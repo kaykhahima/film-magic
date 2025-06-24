@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../shared/widgets/darkened_background.dart';
 
@@ -12,7 +14,23 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  Future<void> _signInWithGoogle() async {}
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  Future<void> _signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleAccount = await _googleSignIn.signIn();
+
+      if (googleAccount == null) {
+        throw Exception('Google sign in failed');
+      }
+
+      print('Google Account: ${googleAccount.toString()}');
+    } catch (error) {
+      rethrow;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +50,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     children: [
                       const Gap(50.0),
                       Text(
-                        'Welcome to Film Magic',
-                        style: Theme.of(context).textTheme.displaySmall,
+                        'Welcome to\nFilm Magic',
+                        style: Theme.of(context).textTheme.displaySmall
+                            ?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                         textAlign: TextAlign.center,
                       ),
                     ],
