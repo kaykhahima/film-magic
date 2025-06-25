@@ -2,7 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 part 'film_credits_model.mapper.dart';
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class FilmCreditsModel with FilmCreditsModelMappable {
   final String id;
   final List<FilmCastModel> cast;
@@ -11,23 +11,18 @@ class FilmCreditsModel with FilmCreditsModelMappable {
   FilmCreditsModel({required this.id, required this.cast, required this.crew});
 }
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class FilmCastModel with FilmCastModelMappable {
   final bool adult;
   final int gender;
   final int id;
-  @MappableField(key: 'known_for_department')
   final String knownForDepartment;
   final String name;
-  @MappableField(key: 'original_name')
   final String originalName;
   final double popularity;
-  @MappableField(key: 'profile_path')
   final String? profilePath;
-  @MappableField(key: 'cast_id')
   final int castId;
   final String character;
-  @MappableField(key: 'credit_id')
   final String creditId;
   final int order;
 
@@ -47,20 +42,16 @@ class FilmCastModel with FilmCastModelMappable {
   });
 }
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class FilmCrewModel with FilmCrewModelMappable {
   final bool adult;
   final int gender;
   final int id;
-  @MappableField(key: 'known_for_department')
   final String knownForDepartment;
   final String name;
-  @MappableField(key: 'original_name')
   final String originalName;
   final double popularity;
-  @MappableField(key: 'profile_path')
   final String? profilePath;
-  @MappableField(key: 'credit_id')
   final String creditId;
   final String department;
   final String job;

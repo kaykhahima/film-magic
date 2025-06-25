@@ -1,4 +1,3 @@
-import 'package:film_magic/core/errors/failures.dart';
 import 'package:film_magic/features/film/data/models/film_credits_model.dart';
 import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
@@ -17,12 +16,12 @@ abstract class FilmRepository {
   Future<FilmListModel> getUpcomingFilms();
 
   /// Retrieves detailed information for a specific film
-  /// 
+  ///
   /// [filmId] - The ID of the film to retrieve details for
   Future<FilmDetailModel> getFilmDetails(int filmId);
 
   /// Retrieves credits (cast and crew) for a specific film
-  /// 
+  ///
   /// [filmId] - The ID of the film to retrieve credits for
   Future<FilmCreditsModel> getFilmCredits(int filmId);
 }

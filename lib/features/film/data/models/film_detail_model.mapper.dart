@@ -27,9 +27,9 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
 
   static bool _$adult(FilmDetailModel v) => v.adult;
   static const Field<FilmDetailModel, bool> _f$adult = Field('adult', _$adult);
-  static String _$backdropPath(FilmDetailModel v) => v.backdropPath;
+  static String? _$backdropPath(FilmDetailModel v) => v.backdropPath;
   static const Field<FilmDetailModel, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path', opt: true);
   static FilmCollection? _$belongsToCollection(FilmDetailModel v) =>
       v.belongsToCollection;
   static const Field<FilmDetailModel, FilmCollection> _f$belongsToCollection =
@@ -64,9 +64,9 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
   static double _$popularity(FilmDetailModel v) => v.popularity;
   static const Field<FilmDetailModel, double> _f$popularity =
       Field('popularity', _$popularity);
-  static String _$posterPath(FilmDetailModel v) => v.posterPath;
+  static String? _$posterPath(FilmDetailModel v) => v.posterPath;
   static const Field<FilmDetailModel, String> _f$posterPath =
-      Field('posterPath', _$posterPath, key: r'poster_path');
+      Field('posterPath', _$posterPath, key: r'poster_path', opt: true);
   static List<ProductionCompany> _$productionCompanies(FilmDetailModel v) =>
       v.productionCompanies;
   static const Field<FilmDetailModel, List<ProductionCompany>>
@@ -309,7 +309,7 @@ class _FilmDetailModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {bool? adult,
-          String? backdropPath,
+          Object? backdropPath = $none,
           Object? belongsToCollection = $none,
           int? budget,
           List<FilmGenre>? genres,
@@ -321,7 +321,7 @@ class _FilmDetailModelCopyWithImpl<$R, $Out>
           String? originalTitle,
           String? overview,
           double? popularity,
-          String? posterPath,
+          Object? posterPath = $none,
           List<ProductionCompany>? productionCompanies,
           List<ProductionCountry>? productionCountries,
           String? releaseDate,
@@ -336,7 +336,7 @@ class _FilmDetailModelCopyWithImpl<$R, $Out>
           int? voteCount}) =>
       $apply(FieldCopyWithData({
         if (adult != null) #adult: adult,
-        if (backdropPath != null) #backdropPath: backdropPath,
+        if (backdropPath != $none) #backdropPath: backdropPath,
         if (belongsToCollection != $none)
           #belongsToCollection: belongsToCollection,
         if (budget != null) #budget: budget,
@@ -349,7 +349,7 @@ class _FilmDetailModelCopyWithImpl<$R, $Out>
         if (originalTitle != null) #originalTitle: originalTitle,
         if (overview != null) #overview: overview,
         if (popularity != null) #popularity: popularity,
-        if (posterPath != null) #posterPath: posterPath,
+        if (posterPath != $none) #posterPath: posterPath,
         if (productionCompanies != null)
           #productionCompanies: productionCompanies,
         if (productionCountries != null)
@@ -422,12 +422,12 @@ class FilmCollectionMapper extends ClassMapperBase<FilmCollection> {
   static const Field<FilmCollection, int> _f$id = Field('id', _$id);
   static String _$name(FilmCollection v) => v.name;
   static const Field<FilmCollection, String> _f$name = Field('name', _$name);
-  static String _$posterPath(FilmCollection v) => v.posterPath;
+  static String? _$posterPath(FilmCollection v) => v.posterPath;
   static const Field<FilmCollection, String> _f$posterPath =
-      Field('posterPath', _$posterPath, key: r'poster_path');
-  static String _$backdropPath(FilmCollection v) => v.backdropPath;
+      Field('posterPath', _$posterPath, key: r'poster_path', opt: true);
+  static String? _$backdropPath(FilmCollection v) => v.backdropPath;
   static const Field<FilmCollection, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path', opt: true);
 
   @override
   final MappableFields<FilmCollection> fields = const {
@@ -512,12 +512,16 @@ class _FilmCollectionCopyWithImpl<$R, $Out>
   late final ClassMapperBase<FilmCollection> $mapper =
       FilmCollectionMapper.ensureInitialized();
   @override
-  $R call({int? id, String? name, String? posterPath, String? backdropPath}) =>
+  $R call(
+          {int? id,
+          String? name,
+          Object? posterPath = $none,
+          Object? backdropPath = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
         if (name != null) #name: name,
-        if (posterPath != null) #posterPath: posterPath,
-        if (backdropPath != null) #backdropPath: backdropPath
+        if (posterPath != $none) #posterPath: posterPath,
+        if (backdropPath != $none) #backdropPath: backdropPath
       }));
   @override
   FilmCollection $make(CopyWithData data) => FilmCollection(
@@ -654,7 +658,7 @@ class ProductionCompanyMapper extends ClassMapperBase<ProductionCompany> {
   static const Field<ProductionCompany, int> _f$id = Field('id', _$id);
   static String? _$logoPath(ProductionCompany v) => v.logoPath;
   static const Field<ProductionCompany, String> _f$logoPath =
-      Field('logoPath', _$logoPath, key: r'logo_path');
+      Field('logoPath', _$logoPath, key: r'logo_path', opt: true);
   static String _$name(ProductionCompany v) => v.name;
   static const Field<ProductionCompany, String> _f$name = Field('name', _$name);
   static String _$originCountry(ProductionCompany v) => v.originCountry;

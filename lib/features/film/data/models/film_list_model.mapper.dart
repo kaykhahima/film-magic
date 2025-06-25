@@ -292,9 +292,9 @@ class FilmModelMapper extends ClassMapperBase<FilmModel> {
 
   static bool _$adult(FilmModel v) => v.adult;
   static const Field<FilmModel, bool> _f$adult = Field('adult', _$adult);
-  static String _$backdropPath(FilmModel v) => v.backdropPath;
+  static String? _$backdropPath(FilmModel v) => v.backdropPath;
   static const Field<FilmModel, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path', opt: true);
   static List<int> _$genreIds(FilmModel v) => v.genreIds;
   static const Field<FilmModel, List<int>> _f$genreIds =
       Field('genreIds', _$genreIds, key: r'genre_ids');
@@ -312,9 +312,9 @@ class FilmModelMapper extends ClassMapperBase<FilmModel> {
   static double _$popularity(FilmModel v) => v.popularity;
   static const Field<FilmModel, double> _f$popularity =
       Field('popularity', _$popularity);
-  static String _$posterPath(FilmModel v) => v.posterPath;
+  static String? _$posterPath(FilmModel v) => v.posterPath;
   static const Field<FilmModel, String> _f$posterPath =
-      Field('posterPath', _$posterPath, key: r'poster_path');
+      Field('posterPath', _$posterPath, key: r'poster_path', opt: true);
   static String _$releaseDate(FilmModel v) => v.releaseDate;
   static const Field<FilmModel, String> _f$releaseDate =
       Field('releaseDate', _$releaseDate, key: r'release_date');
@@ -449,14 +449,14 @@ class _FilmModelCopyWithImpl<$R, $Out>
   @override
   $R call(
           {bool? adult,
-          String? backdropPath,
+          Object? backdropPath = $none,
           List<int>? genreIds,
           int? id,
           String? originalLanguage,
           String? originalTitle,
           String? overview,
           double? popularity,
-          String? posterPath,
+          Object? posterPath = $none,
           String? releaseDate,
           String? title,
           bool? video,
@@ -464,14 +464,14 @@ class _FilmModelCopyWithImpl<$R, $Out>
           int? voteCount}) =>
       $apply(FieldCopyWithData({
         if (adult != null) #adult: adult,
-        if (backdropPath != null) #backdropPath: backdropPath,
+        if (backdropPath != $none) #backdropPath: backdropPath,
         if (genreIds != null) #genreIds: genreIds,
         if (id != null) #id: id,
         if (originalLanguage != null) #originalLanguage: originalLanguage,
         if (originalTitle != null) #originalTitle: originalTitle,
         if (overview != null) #overview: overview,
         if (popularity != null) #popularity: popularity,
-        if (posterPath != null) #posterPath: posterPath,
+        if (posterPath != $none) #posterPath: posterPath,
         if (releaseDate != null) #releaseDate: releaseDate,
         if (title != null) #title: title,
         if (video != null) #video: video,
