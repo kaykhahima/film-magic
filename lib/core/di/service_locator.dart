@@ -1,6 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:film_magic/core/database/database_helper.dart';
 import 'package:film_magic/core/network/network_info.dart';
+import 'package:film_magic/core/network/api_client.dart';
 import 'package:film_magic/features/authentication/data/datasources/auth_local_data_source.dart';
 import 'package:film_magic/features/authentication/data/repositories/auth_repository.dart';
 import 'package:film_magic/features/authentication/data/repositories/auth_repository_impl.dart';
@@ -12,6 +15,13 @@ Future<void> initServiceLocator() async {
   // Core
   sl.registerLazySingleton(() => NetworkInfo());
   sl.registerLazySingleton(() => DatabaseHelper());
+  
+  // External
+  sl.registerLazySingleton(() => http.Client());
+  
+  // API
+  final tmdbApiKey = dotenv.env['TMDB_API_KEY'] ?? '';
+  sl.registerLazySingleton(() => ApiClient(sl(), tmdbApiKey));
   
   // Data sources
   sl.registerLazySingleton(() => AuthLocalDataSource(sl()));

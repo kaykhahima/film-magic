@@ -5,30 +5,43 @@ part 'film_detail_model.mapper.dart';
 @MappableClass()
 class FilmDetailModel with FilmDetailModelMappable {
   final bool adult;
+  @MappableField(key: 'backdrop_path')
   final String backdropPath;
+  @MappableField(key: 'belongs_to_collection')
   final FilmCollection? belongsToCollection;
   final int budget;
   final List<FilmGenre> genres;
   final String homepage;
   final int id;
+  @MappableField(key: 'imdb_id')
   final String imdbId;
+  @MappableField(key: 'origin_country')
   final List<String> originCountry;
+  @MappableField(key: 'original_language')
   final String originalLanguage;
+  @MappableField(key: 'original_title')
   final String originalTitle;
   final String overview;
   final double popularity;
+  @MappableField(key: 'poster_path')
   final String posterPath;
+  @MappableField(key: 'production_companies')
   final List<ProductionCompany> productionCompanies;
+  @MappableField(key: 'production_countries')
   final List<ProductionCountry> productionCountries;
+  @MappableField(key: 'release_date')
   final String releaseDate;
   final int revenue;
   final int runtime;
+  @MappableField(key: 'spoken_languages')
   final List<SpokenLanguage> spokenLanguages;
   final String status;
   final String tagline;
   final String title;
   final bool video;
+  @MappableField(key: 'vote_average')
   final double voteAverage;
+  @MappableField(key: 'vote_count')
   final int voteCount;
 
   FilmDetailModel({
@@ -65,7 +78,9 @@ class FilmDetailModel with FilmDetailModelMappable {
 class FilmCollection with FilmCollectionMappable {
   final int id;
   final String name;
+  @MappableField(key: 'poster_path')
   final String posterPath;
+  @MappableField(key: 'backdrop_path')
   final String backdropPath;
 
   FilmCollection({
@@ -87,8 +102,10 @@ class FilmGenre with FilmGenreMappable {
 @MappableClass()
 class ProductionCompany with ProductionCompanyMappable {
   final int id;
+  @MappableField(key: 'logo_path')
   final String? logoPath;
   final String name;
+  @MappableField(key: 'origin_country')
   final String originCountry;
 
   ProductionCompany({
@@ -101,6 +118,7 @@ class ProductionCompany with ProductionCompanyMappable {
 
 @MappableClass()
 class ProductionCountry with ProductionCountryMappable {
+  @MappableField(key: 'iso_3166_1')
   final String iso31661;
   final String name;
 
@@ -109,7 +127,9 @@ class ProductionCountry with ProductionCountryMappable {
 
 @MappableClass()
 class SpokenLanguage with SpokenLanguageMappable {
+  @MappableField(key: 'english_name')
   final String englishName;
+  @MappableField(key: 'iso_639_1')
   final String iso6391;
   final String name;
 

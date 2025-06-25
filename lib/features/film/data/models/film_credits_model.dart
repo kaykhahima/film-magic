@@ -16,13 +16,18 @@ class FilmCastModel with FilmCastModelMappable {
   final bool adult;
   final int gender;
   final int id;
+  @MappableField(key: 'known_for_department')
   final String knownForDepartment;
   final String name;
+  @MappableField(key: 'original_name')
   final String originalName;
   final double popularity;
-  final String profilePath;
+  @MappableField(key: 'profile_path')
+  final String? profilePath;
+  @MappableField(key: 'cast_id')
   final int castId;
   final String character;
+  @MappableField(key: 'credit_id')
   final String creditId;
   final int order;
 
@@ -34,7 +39,7 @@ class FilmCastModel with FilmCastModelMappable {
     required this.name,
     required this.originalName,
     required this.popularity,
-    required this.profilePath,
+    this.profilePath,
     required this.castId,
     required this.character,
     required this.creditId,
@@ -47,11 +52,15 @@ class FilmCrewModel with FilmCrewModelMappable {
   final bool adult;
   final int gender;
   final int id;
+  @MappableField(key: 'known_for_department')
   final String knownForDepartment;
   final String name;
+  @MappableField(key: 'original_name')
   final String originalName;
   final double popularity;
-  final String profilePath;
+  @MappableField(key: 'profile_path')
+  final String? profilePath;
+  @MappableField(key: 'credit_id')
   final String creditId;
   final String department;
   final String job;
@@ -64,7 +73,7 @@ class FilmCrewModel with FilmCrewModelMappable {
     required this.name,
     required this.originalName,
     required this.popularity,
-    required this.profilePath,
+    this.profilePath,
     required this.creditId,
     required this.department,
     required this.job,

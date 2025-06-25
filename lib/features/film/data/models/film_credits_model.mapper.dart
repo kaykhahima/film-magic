@@ -164,27 +164,29 @@ class FilmCastModelMapper extends ClassMapperBase<FilmCastModel> {
   static int _$id(FilmCastModel v) => v.id;
   static const Field<FilmCastModel, int> _f$id = Field('id', _$id);
   static String _$knownForDepartment(FilmCastModel v) => v.knownForDepartment;
-  static const Field<FilmCastModel, String> _f$knownForDepartment =
-      Field('knownForDepartment', _$knownForDepartment);
+  static const Field<FilmCastModel, String> _f$knownForDepartment = Field(
+      'knownForDepartment', _$knownForDepartment,
+      key: r'known_for_department');
   static String _$name(FilmCastModel v) => v.name;
   static const Field<FilmCastModel, String> _f$name = Field('name', _$name);
   static String _$originalName(FilmCastModel v) => v.originalName;
   static const Field<FilmCastModel, String> _f$originalName =
-      Field('originalName', _$originalName);
+      Field('originalName', _$originalName, key: r'original_name');
   static double _$popularity(FilmCastModel v) => v.popularity;
   static const Field<FilmCastModel, double> _f$popularity =
       Field('popularity', _$popularity);
-  static String _$profilePath(FilmCastModel v) => v.profilePath;
+  static String? _$profilePath(FilmCastModel v) => v.profilePath;
   static const Field<FilmCastModel, String> _f$profilePath =
-      Field('profilePath', _$profilePath);
+      Field('profilePath', _$profilePath, key: r'profile_path', opt: true);
   static int _$castId(FilmCastModel v) => v.castId;
-  static const Field<FilmCastModel, int> _f$castId = Field('castId', _$castId);
+  static const Field<FilmCastModel, int> _f$castId =
+      Field('castId', _$castId, key: r'cast_id');
   static String _$character(FilmCastModel v) => v.character;
   static const Field<FilmCastModel, String> _f$character =
       Field('character', _$character);
   static String _$creditId(FilmCastModel v) => v.creditId;
   static const Field<FilmCastModel, String> _f$creditId =
-      Field('creditId', _$creditId);
+      Field('creditId', _$creditId, key: r'credit_id');
   static int _$order(FilmCastModel v) => v.order;
   static const Field<FilmCastModel, int> _f$order = Field('order', _$order);
 
@@ -306,7 +308,7 @@ class _FilmCastModelCopyWithImpl<$R, $Out>
           String? name,
           String? originalName,
           double? popularity,
-          String? profilePath,
+          Object? profilePath = $none,
           int? castId,
           String? character,
           String? creditId,
@@ -319,7 +321,7 @@ class _FilmCastModelCopyWithImpl<$R, $Out>
         if (name != null) #name: name,
         if (originalName != null) #originalName: originalName,
         if (popularity != null) #popularity: popularity,
-        if (profilePath != null) #profilePath: profilePath,
+        if (profilePath != $none) #profilePath: profilePath,
         if (castId != null) #castId: castId,
         if (character != null) #character: character,
         if (creditId != null) #creditId: creditId,
@@ -368,22 +370,23 @@ class FilmCrewModelMapper extends ClassMapperBase<FilmCrewModel> {
   static int _$id(FilmCrewModel v) => v.id;
   static const Field<FilmCrewModel, int> _f$id = Field('id', _$id);
   static String _$knownForDepartment(FilmCrewModel v) => v.knownForDepartment;
-  static const Field<FilmCrewModel, String> _f$knownForDepartment =
-      Field('knownForDepartment', _$knownForDepartment);
+  static const Field<FilmCrewModel, String> _f$knownForDepartment = Field(
+      'knownForDepartment', _$knownForDepartment,
+      key: r'known_for_department');
   static String _$name(FilmCrewModel v) => v.name;
   static const Field<FilmCrewModel, String> _f$name = Field('name', _$name);
   static String _$originalName(FilmCrewModel v) => v.originalName;
   static const Field<FilmCrewModel, String> _f$originalName =
-      Field('originalName', _$originalName);
+      Field('originalName', _$originalName, key: r'original_name');
   static double _$popularity(FilmCrewModel v) => v.popularity;
   static const Field<FilmCrewModel, double> _f$popularity =
       Field('popularity', _$popularity);
-  static String _$profilePath(FilmCrewModel v) => v.profilePath;
+  static String? _$profilePath(FilmCrewModel v) => v.profilePath;
   static const Field<FilmCrewModel, String> _f$profilePath =
-      Field('profilePath', _$profilePath);
+      Field('profilePath', _$profilePath, key: r'profile_path', opt: true);
   static String _$creditId(FilmCrewModel v) => v.creditId;
   static const Field<FilmCrewModel, String> _f$creditId =
-      Field('creditId', _$creditId);
+      Field('creditId', _$creditId, key: r'credit_id');
   static String _$department(FilmCrewModel v) => v.department;
   static const Field<FilmCrewModel, String> _f$department =
       Field('department', _$department);
@@ -505,7 +508,7 @@ class _FilmCrewModelCopyWithImpl<$R, $Out>
           String? name,
           String? originalName,
           double? popularity,
-          String? profilePath,
+          Object? profilePath = $none,
           String? creditId,
           String? department,
           String? job}) =>
@@ -517,7 +520,7 @@ class _FilmCrewModelCopyWithImpl<$R, $Out>
         if (name != null) #name: name,
         if (originalName != null) #originalName: originalName,
         if (popularity != null) #popularity: popularity,
-        if (profilePath != null) #profilePath: profilePath,
+        if (profilePath != $none) #profilePath: profilePath,
         if (creditId != null) #creditId: creditId,
         if (department != null) #department: department,
         if (job != null) #job: job

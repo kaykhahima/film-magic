@@ -42,6 +42,8 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   dart_mappable_builder: ^4.2.0
   build_runner: ^2.4.8
+  mockito: ^5.4.5
+  build_test: ^3.2.0
 
 
 flutter:

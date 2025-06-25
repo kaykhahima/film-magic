@@ -32,10 +32,10 @@ class FilmListModelMapper extends ClassMapperBase<FilmListModel> {
   static const Field<FilmListModel, int> _f$page = Field('page', _$page);
   static int _$totalPages(FilmListModel v) => v.totalPages;
   static const Field<FilmListModel, int> _f$totalPages =
-      Field('totalPages', _$totalPages);
+      Field('totalPages', _$totalPages, key: r'total_pages');
   static int _$totalResults(FilmListModel v) => v.totalResults;
   static const Field<FilmListModel, int> _f$totalResults =
-      Field('totalResults', _$totalResults);
+      Field('totalResults', _$totalResults, key: r'total_results');
 
   @override
   final MappableFields<FilmListModel> fields = const {
@@ -294,18 +294,18 @@ class FilmModelMapper extends ClassMapperBase<FilmModel> {
   static const Field<FilmModel, bool> _f$adult = Field('adult', _$adult);
   static String _$backdropPath(FilmModel v) => v.backdropPath;
   static const Field<FilmModel, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath);
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
   static List<int> _$genreIds(FilmModel v) => v.genreIds;
   static const Field<FilmModel, List<int>> _f$genreIds =
-      Field('genreIds', _$genreIds);
+      Field('genreIds', _$genreIds, key: r'genre_ids');
   static int _$id(FilmModel v) => v.id;
   static const Field<FilmModel, int> _f$id = Field('id', _$id);
   static String _$originalLanguage(FilmModel v) => v.originalLanguage;
   static const Field<FilmModel, String> _f$originalLanguage =
-      Field('originalLanguage', _$originalLanguage);
+      Field('originalLanguage', _$originalLanguage, key: r'original_language');
   static String _$originalTitle(FilmModel v) => v.originalTitle;
   static const Field<FilmModel, String> _f$originalTitle =
-      Field('originalTitle', _$originalTitle);
+      Field('originalTitle', _$originalTitle, key: r'original_title');
   static String _$overview(FilmModel v) => v.overview;
   static const Field<FilmModel, String> _f$overview =
       Field('overview', _$overview);
@@ -314,20 +314,20 @@ class FilmModelMapper extends ClassMapperBase<FilmModel> {
       Field('popularity', _$popularity);
   static String _$posterPath(FilmModel v) => v.posterPath;
   static const Field<FilmModel, String> _f$posterPath =
-      Field('posterPath', _$posterPath);
+      Field('posterPath', _$posterPath, key: r'poster_path');
   static String _$releaseDate(FilmModel v) => v.releaseDate;
   static const Field<FilmModel, String> _f$releaseDate =
-      Field('releaseDate', _$releaseDate);
+      Field('releaseDate', _$releaseDate, key: r'release_date');
   static String _$title(FilmModel v) => v.title;
   static const Field<FilmModel, String> _f$title = Field('title', _$title);
   static bool _$video(FilmModel v) => v.video;
   static const Field<FilmModel, bool> _f$video = Field('video', _$video);
   static double _$voteAverage(FilmModel v) => v.voteAverage;
   static const Field<FilmModel, double> _f$voteAverage =
-      Field('voteAverage', _$voteAverage);
+      Field('voteAverage', _$voteAverage, key: r'vote_average');
   static int _$voteCount(FilmModel v) => v.voteCount;
   static const Field<FilmModel, int> _f$voteCount =
-      Field('voteCount', _$voteCount);
+      Field('voteCount', _$voteCount, key: r'vote_count');
 
   @override
   final MappableFields<FilmModel> fields = const {

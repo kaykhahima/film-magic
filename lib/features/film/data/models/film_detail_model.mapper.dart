@@ -29,11 +29,12 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
   static const Field<FilmDetailModel, bool> _f$adult = Field('adult', _$adult);
   static String _$backdropPath(FilmDetailModel v) => v.backdropPath;
   static const Field<FilmDetailModel, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath);
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
   static FilmCollection? _$belongsToCollection(FilmDetailModel v) =>
       v.belongsToCollection;
   static const Field<FilmDetailModel, FilmCollection> _f$belongsToCollection =
-      Field('belongsToCollection', _$belongsToCollection);
+      Field('belongsToCollection', _$belongsToCollection,
+          key: r'belongs_to_collection');
   static int _$budget(FilmDetailModel v) => v.budget;
   static const Field<FilmDetailModel, int> _f$budget =
       Field('budget', _$budget);
@@ -47,16 +48,16 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
   static const Field<FilmDetailModel, int> _f$id = Field('id', _$id);
   static String _$imdbId(FilmDetailModel v) => v.imdbId;
   static const Field<FilmDetailModel, String> _f$imdbId =
-      Field('imdbId', _$imdbId);
+      Field('imdbId', _$imdbId, key: r'imdb_id');
   static List<String> _$originCountry(FilmDetailModel v) => v.originCountry;
   static const Field<FilmDetailModel, List<String>> _f$originCountry =
-      Field('originCountry', _$originCountry);
+      Field('originCountry', _$originCountry, key: r'origin_country');
   static String _$originalLanguage(FilmDetailModel v) => v.originalLanguage;
   static const Field<FilmDetailModel, String> _f$originalLanguage =
-      Field('originalLanguage', _$originalLanguage);
+      Field('originalLanguage', _$originalLanguage, key: r'original_language');
   static String _$originalTitle(FilmDetailModel v) => v.originalTitle;
   static const Field<FilmDetailModel, String> _f$originalTitle =
-      Field('originalTitle', _$originalTitle);
+      Field('originalTitle', _$originalTitle, key: r'original_title');
   static String _$overview(FilmDetailModel v) => v.overview;
   static const Field<FilmDetailModel, String> _f$overview =
       Field('overview', _$overview);
@@ -65,20 +66,22 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
       Field('popularity', _$popularity);
   static String _$posterPath(FilmDetailModel v) => v.posterPath;
   static const Field<FilmDetailModel, String> _f$posterPath =
-      Field('posterPath', _$posterPath);
+      Field('posterPath', _$posterPath, key: r'poster_path');
   static List<ProductionCompany> _$productionCompanies(FilmDetailModel v) =>
       v.productionCompanies;
   static const Field<FilmDetailModel, List<ProductionCompany>>
-      _f$productionCompanies =
-      Field('productionCompanies', _$productionCompanies);
+      _f$productionCompanies = Field(
+          'productionCompanies', _$productionCompanies,
+          key: r'production_companies');
   static List<ProductionCountry> _$productionCountries(FilmDetailModel v) =>
       v.productionCountries;
   static const Field<FilmDetailModel, List<ProductionCountry>>
-      _f$productionCountries =
-      Field('productionCountries', _$productionCountries);
+      _f$productionCountries = Field(
+          'productionCountries', _$productionCountries,
+          key: r'production_countries');
   static String _$releaseDate(FilmDetailModel v) => v.releaseDate;
   static const Field<FilmDetailModel, String> _f$releaseDate =
-      Field('releaseDate', _$releaseDate);
+      Field('releaseDate', _$releaseDate, key: r'release_date');
   static int _$revenue(FilmDetailModel v) => v.revenue;
   static const Field<FilmDetailModel, int> _f$revenue =
       Field('revenue', _$revenue);
@@ -88,7 +91,7 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
   static List<SpokenLanguage> _$spokenLanguages(FilmDetailModel v) =>
       v.spokenLanguages;
   static const Field<FilmDetailModel, List<SpokenLanguage>> _f$spokenLanguages =
-      Field('spokenLanguages', _$spokenLanguages);
+      Field('spokenLanguages', _$spokenLanguages, key: r'spoken_languages');
   static String _$status(FilmDetailModel v) => v.status;
   static const Field<FilmDetailModel, String> _f$status =
       Field('status', _$status);
@@ -102,10 +105,10 @@ class FilmDetailModelMapper extends ClassMapperBase<FilmDetailModel> {
   static const Field<FilmDetailModel, bool> _f$video = Field('video', _$video);
   static double _$voteAverage(FilmDetailModel v) => v.voteAverage;
   static const Field<FilmDetailModel, double> _f$voteAverage =
-      Field('voteAverage', _$voteAverage);
+      Field('voteAverage', _$voteAverage, key: r'vote_average');
   static int _$voteCount(FilmDetailModel v) => v.voteCount;
   static const Field<FilmDetailModel, int> _f$voteCount =
-      Field('voteCount', _$voteCount);
+      Field('voteCount', _$voteCount, key: r'vote_count');
 
   @override
   final MappableFields<FilmDetailModel> fields = const {
@@ -421,10 +424,10 @@ class FilmCollectionMapper extends ClassMapperBase<FilmCollection> {
   static const Field<FilmCollection, String> _f$name = Field('name', _$name);
   static String _$posterPath(FilmCollection v) => v.posterPath;
   static const Field<FilmCollection, String> _f$posterPath =
-      Field('posterPath', _$posterPath);
+      Field('posterPath', _$posterPath, key: r'poster_path');
   static String _$backdropPath(FilmCollection v) => v.backdropPath;
   static const Field<FilmCollection, String> _f$backdropPath =
-      Field('backdropPath', _$backdropPath);
+      Field('backdropPath', _$backdropPath, key: r'backdrop_path');
 
   @override
   final MappableFields<FilmCollection> fields = const {
@@ -651,12 +654,12 @@ class ProductionCompanyMapper extends ClassMapperBase<ProductionCompany> {
   static const Field<ProductionCompany, int> _f$id = Field('id', _$id);
   static String? _$logoPath(ProductionCompany v) => v.logoPath;
   static const Field<ProductionCompany, String> _f$logoPath =
-      Field('logoPath', _$logoPath);
+      Field('logoPath', _$logoPath, key: r'logo_path');
   static String _$name(ProductionCompany v) => v.name;
   static const Field<ProductionCompany, String> _f$name = Field('name', _$name);
   static String _$originCountry(ProductionCompany v) => v.originCountry;
   static const Field<ProductionCompany, String> _f$originCountry =
-      Field('originCountry', _$originCountry);
+      Field('originCountry', _$originCountry, key: r'origin_country');
 
   @override
   final MappableFields<ProductionCompany> fields = const {
@@ -783,7 +786,7 @@ class ProductionCountryMapper extends ClassMapperBase<ProductionCountry> {
 
   static String _$iso31661(ProductionCountry v) => v.iso31661;
   static const Field<ProductionCountry, String> _f$iso31661 =
-      Field('iso31661', _$iso31661);
+      Field('iso31661', _$iso31661, key: r'iso_3166_1');
   static String _$name(ProductionCountry v) => v.name;
   static const Field<ProductionCountry, String> _f$name = Field('name', _$name);
 
@@ -898,10 +901,10 @@ class SpokenLanguageMapper extends ClassMapperBase<SpokenLanguage> {
 
   static String _$englishName(SpokenLanguage v) => v.englishName;
   static const Field<SpokenLanguage, String> _f$englishName =
-      Field('englishName', _$englishName);
+      Field('englishName', _$englishName, key: r'english_name');
   static String _$iso6391(SpokenLanguage v) => v.iso6391;
   static const Field<SpokenLanguage, String> _f$iso6391 =
-      Field('iso6391', _$iso6391);
+      Field('iso6391', _$iso6391, key: r'iso_639_1');
   static String _$name(SpokenLanguage v) => v.name;
   static const Field<SpokenLanguage, String> _f$name = Field('name', _$name);
 
