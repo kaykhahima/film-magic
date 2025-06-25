@@ -4,6 +4,7 @@ import 'package:film_magic/features/film/presentation/views/film_details_screen.
 import 'package:film_magic/features/film/presentation/views/film_screen.dart';
 import 'package:film_magic/features/home/presentation/views/home_screen.dart';
 import 'package:film_magic/features/profile/presentation/views/profile_screen.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -100,9 +101,11 @@ class AppRouter {
       final bool isLoading = authViewModel.isLoading;
       final bool isLoginRoute = state.matchedLocation == registrationRoute;
 
-      print(
-        'Redirect check - Auth: $isAuthenticated, Loading: $isLoading, LoginRoute: $isLoginRoute',
-      );
+      if (kDebugMode) {
+        print(
+          'Redirect check - Auth: $isAuthenticated, Loading: $isLoading, LoginRoute: $isLoginRoute',
+        );
+      }
 
       // If still loading, don't redirect yet
       if (isLoading) return null;

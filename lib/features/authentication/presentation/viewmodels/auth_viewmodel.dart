@@ -1,9 +1,6 @@
-import 'package:film_magic/core/navigation/app_router.dart';
-import 'package:flutter/foundation.dart';
 import 'package:film_magic/features/authentication/data/models/user_model.dart';
 import 'package:film_magic/features/authentication/data/repositories/auth_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 enum AuthStatus { initial, authenticated, unauthenticated, loading, error }
 
@@ -13,6 +10,7 @@ class AuthViewModel extends ChangeNotifier {
   AuthStatus _status = AuthStatus.initial;
   UserModel? _user;
   String? _errorMessage;
+  ThemePreference _themePreference = ThemePreference.systemDefault;
 
   AuthViewModel(this._authRepository) {
     // Listen to auth state changes
@@ -20,6 +18,7 @@ class AuthViewModel extends ChangeNotifier {
       if (user != null) {
         _user = user;
         _status = AuthStatus.authenticated;
+        _themePreference = user.themePreference;
       } else {
         _user = null;
         _status = AuthStatus.unauthenticated;
@@ -29,6 +28,8 @@ class AuthViewModel extends ChangeNotifier {
 
     // Check if user is already signed in
     _checkCurrentUser();
+    // Load theme preference
+    _loadThemePreference();
   }
 
   // Getters
@@ -37,6 +38,17 @@ class AuthViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   bool get isAuthenticated => _status == AuthStatus.authenticated;
   bool get isLoading => _status == AuthStatus.loading;
+  ThemePreference get themePreference => _themePreference;
+  ThemeMode get themeMode {
+    switch (_themePreference) {
+      case ThemePreference.light:
+        return ThemeMode.light;
+      case ThemePreference.dark:
+        return ThemeMode.dark;
+      case ThemePreference.systemDefault:
+        return ThemeMode.system;
+    }
+  }
 
   Future<void> _checkCurrentUser() async {
     try {
@@ -47,6 +59,7 @@ class AuthViewModel extends ChangeNotifier {
 
       if (user != null) {
         _user = user;
+        _themePreference = user.themePreference;
         _status = AuthStatus.authenticated;
       } else {
         _status = AuthStatus.unauthenticated;
@@ -57,8 +70,15 @@ class AuthViewModel extends ChangeNotifier {
     } finally {
       notifyListeners();
     }
+  }
 
-    print('Current user status: $_status');
+  Future<void> _loadThemePreference() async {
+    try {
+      _themePreference = await _authRepository.getCurrentThemePreference();
+      notifyListeners();
+    } catch (e) {
+      // If there's an error, we'll keep the default theme
+    }
   }
 
   Future<void> signInWithGoogle() async {
@@ -68,6 +88,7 @@ class AuthViewModel extends ChangeNotifier {
       notifyListeners();
 
       _user = await _authRepository.signInWithGoogle();
+      _themePreference = _user!.themePreference;
       _status = AuthStatus.authenticated;
     } catch (e) {
       _status = AuthStatus.error;
@@ -79,6 +100,9 @@ class AuthViewModel extends ChangeNotifier {
 
   Future<void> signOut() async {
     try {
+      _status = AuthStatus.loading;
+      notifyListeners();
+      
       await _authRepository.signOut();
       _status = AuthStatus.unauthenticated;
       _user = null;
@@ -86,6 +110,17 @@ class AuthViewModel extends ChangeNotifier {
       _status = AuthStatus.error;
       _errorMessage = e.toString();
     } finally {
+      notifyListeners();
+    }
+  }
+
+  Future<void> updateThemePreference(ThemePreference preference) async {
+    try {
+      await _authRepository.updateThemePreference(preference);
+      _themePreference = preference;
+      notifyListeners();
+    } catch (e) {
+      _errorMessage = e.toString();
       notifyListeners();
     }
   }
