@@ -1,3 +1,4 @@
+import 'package:film_magic/features/actor/presentation/viewmodels/actor_viewmodel.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,10 @@ import 'package:film_magic/features/film/data/repositories/film_repository.dart'
 import 'package:film_magic/features/film/data/repositories/film_repository_impl.dart';
 import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
 import 'package:film_magic/features/film/presentation/viewmodels/film_detail_viewmodel.dart';
+import 'package:film_magic/features/actor/data/datasources/actor_local_data_source.dart';
+import 'package:film_magic/features/actor/data/datasources/actor_remote_data_source.dart';
+import 'package:film_magic/features/actor/data/repositories/actor_repository.dart';
+import 'package:film_magic/features/actor/data/repositories/actor_repository_impl.dart';
 
 import '../../features/film/data/datasources/film_local_data_source.dart';
 import '../../features/film/data/datasources/film_remote_data_source.dart';
@@ -34,6 +39,8 @@ Future<void> initServiceLocator() async {
   sl.registerLazySingleton(() => AuthLocalDataSource(sl()));
   sl.registerLazySingleton(() => FilmLocalDataSource(sl()));
   sl.registerLazySingleton(() => FilmRemoteDataSource(sl()));
+  sl.registerLazySingleton(() => ActorLocalDataSource(sl()));
+  sl.registerLazySingleton(() => ActorRemoteDataSource(sl()));
 
   // Repositories
   sl.registerLazySingleton<AuthRepository>(
@@ -48,9 +55,19 @@ Future<void> initServiceLocator() async {
       remoteDataSource: sl(),
     ),
   );
+  
+  // Add Actor Repository
+  sl.registerLazySingleton<ActorRepository>(
+    () => ActorRepositoryImpl(
+      networkInfo: sl(),
+      localDataSource: sl(),
+      remoteDataSource: sl(),
+    ),
+  );
 
   // ViewModels
   sl.registerFactory(() => AuthViewModel(sl()));
   sl.registerFactory(() => FilmViewModel(sl()));
   sl.registerFactory(() => FilmDetailViewModel(sl()));
+  sl.registerFactory(() => ActorViewModel(sl()));
 }

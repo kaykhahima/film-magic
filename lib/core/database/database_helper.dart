@@ -19,7 +19,12 @@ class DatabaseHelper {
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, 'film_magic.db');
 
-    return await openDatabase(path, version: 1, onCreate: _onCreate);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _onCreate,
+      onUpgrade: _onUpgrade,
+    );
   }
 
   // Create all tables here
@@ -195,9 +200,28 @@ class DatabaseHelper {
         timestamp TEXT NOT NULL
       )
     ''');
-  }
 
-  // TODO: Add other tables here
+    // Actor table
+    await db.execute('''
+        CREATE TABLE actors(
+          id INTEGER PRIMARY KEY,
+          name TEXT NOT NULL,
+          adult INTEGER NOT NULL,
+          also_known_as TEXT,
+          biography TEXT,
+          birthday TEXT,
+          deathday TEXT,
+          gender INTEGER,
+          homepage TEXT,
+          imdb_id TEXT,
+          known_for_department TEXT,
+          place_of_birth TEXT,
+          popularity REAL,
+          profile_path TEXT,
+          cached_at TEXT
+        )
+      ''');
+  }
 
   // Generic database operations that can be used by any repository
   Future<int> insert(String table, Map<String, dynamic> data) async {
@@ -253,5 +277,10 @@ class DatabaseHelper {
   }) async {
     final db = await database;
     return await db.delete(table, where: where, whereArgs: whereArgs);
+  }
+
+  // Handle database migrations
+  Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {}
   }
 }

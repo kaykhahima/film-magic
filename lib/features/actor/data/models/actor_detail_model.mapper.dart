@@ -22,45 +22,45 @@ class ActorDetailModelMapper extends ClassMapperBase<ActorDetailModel> {
 
   static bool _$adult(ActorDetailModel v) => v.adult;
   static const Field<ActorDetailModel, bool> _f$adult = Field('adult', _$adult);
-  static List<String> _$alsoKnownAs(ActorDetailModel v) => v.alsoKnownAs;
+  static List<String>? _$alsoKnownAs(ActorDetailModel v) => v.alsoKnownAs;
   static const Field<ActorDetailModel, List<String>> _f$alsoKnownAs =
-      Field('alsoKnownAs', _$alsoKnownAs, key: r'also_known_as');
-  static String _$biography(ActorDetailModel v) => v.biography;
+      Field('alsoKnownAs', _$alsoKnownAs, key: r'also_known_as', opt: true);
+  static String? _$biography(ActorDetailModel v) => v.biography;
   static const Field<ActorDetailModel, String> _f$biography =
-      Field('biography', _$biography);
-  static String _$birthday(ActorDetailModel v) => v.birthday;
+      Field('biography', _$biography, opt: true);
+  static String? _$birthday(ActorDetailModel v) => v.birthday;
   static const Field<ActorDetailModel, String> _f$birthday =
-      Field('birthday', _$birthday);
+      Field('birthday', _$birthday, opt: true);
   static String? _$deathday(ActorDetailModel v) => v.deathday;
   static const Field<ActorDetailModel, String> _f$deathday =
-      Field('deathday', _$deathday);
+      Field('deathday', _$deathday, opt: true);
   static int _$gender(ActorDetailModel v) => v.gender;
   static const Field<ActorDetailModel, int> _f$gender =
       Field('gender', _$gender);
   static String? _$homepage(ActorDetailModel v) => v.homepage;
   static const Field<ActorDetailModel, String> _f$homepage =
-      Field('homepage', _$homepage);
+      Field('homepage', _$homepage, opt: true);
   static int _$id(ActorDetailModel v) => v.id;
   static const Field<ActorDetailModel, int> _f$id = Field('id', _$id);
-  static String _$imdbId(ActorDetailModel v) => v.imdbId;
+  static String? _$imdbId(ActorDetailModel v) => v.imdbId;
   static const Field<ActorDetailModel, String> _f$imdbId =
-      Field('imdbId', _$imdbId, key: r'imdb_id');
-  static String _$knownForDepartment(ActorDetailModel v) =>
+      Field('imdbId', _$imdbId, key: r'imdb_id', opt: true);
+  static String? _$knownForDepartment(ActorDetailModel v) =>
       v.knownForDepartment;
   static const Field<ActorDetailModel, String> _f$knownForDepartment = Field(
       'knownForDepartment', _$knownForDepartment,
-      key: r'known_for_department');
+      key: r'known_for_department', opt: true);
   static String _$name(ActorDetailModel v) => v.name;
   static const Field<ActorDetailModel, String> _f$name = Field('name', _$name);
-  static String _$placeOfBirth(ActorDetailModel v) => v.placeOfBirth;
+  static String? _$placeOfBirth(ActorDetailModel v) => v.placeOfBirth;
   static const Field<ActorDetailModel, String> _f$placeOfBirth =
-      Field('placeOfBirth', _$placeOfBirth, key: r'place_of_birth');
-  static double _$popularity(ActorDetailModel v) => v.popularity;
+      Field('placeOfBirth', _$placeOfBirth, key: r'place_of_birth', opt: true);
+  static double? _$popularity(ActorDetailModel v) => v.popularity;
   static const Field<ActorDetailModel, double> _f$popularity =
-      Field('popularity', _$popularity);
-  static String _$profilePath(ActorDetailModel v) => v.profilePath;
+      Field('popularity', _$popularity, opt: true);
+  static String? _$profilePath(ActorDetailModel v) => v.profilePath;
   static const Field<ActorDetailModel, String> _f$profilePath =
-      Field('profilePath', _$profilePath, key: r'profile_path');
+      Field('profilePath', _$profilePath, key: r'profile_path', opt: true);
 
   @override
   final MappableFields<ActorDetailModel> fields = const {
@@ -152,7 +152,7 @@ extension ActorDetailModelValueCopy<$R, $Out>
 
 abstract class ActorDetailModelCopyWith<$R, $In extends ActorDetailModel, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>> get alsoKnownAs;
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>? get alsoKnownAs;
   $R call(
       {bool? adult,
       List<String>? alsoKnownAs,
@@ -181,42 +181,45 @@ class _ActorDetailModelCopyWithImpl<$R, $Out>
   late final ClassMapperBase<ActorDetailModel> $mapper =
       ActorDetailModelMapper.ensureInitialized();
   @override
-  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>
-      get alsoKnownAs => ListCopyWith(
-          $value.alsoKnownAs,
-          (v, t) => ObjectCopyWith(v, $identity, t),
-          (v) => call(alsoKnownAs: v));
+  ListCopyWith<$R, String, ObjectCopyWith<$R, String, String>>?
+      get alsoKnownAs => $value.alsoKnownAs != null
+          ? ListCopyWith(
+              $value.alsoKnownAs!,
+              (v, t) => ObjectCopyWith(v, $identity, t),
+              (v) => call(alsoKnownAs: v))
+          : null;
   @override
   $R call(
           {bool? adult,
-          List<String>? alsoKnownAs,
-          String? biography,
-          String? birthday,
+          Object? alsoKnownAs = $none,
+          Object? biography = $none,
+          Object? birthday = $none,
           Object? deathday = $none,
           int? gender,
           Object? homepage = $none,
           int? id,
-          String? imdbId,
-          String? knownForDepartment,
+          Object? imdbId = $none,
+          Object? knownForDepartment = $none,
           String? name,
-          String? placeOfBirth,
-          double? popularity,
-          String? profilePath}) =>
+          Object? placeOfBirth = $none,
+          Object? popularity = $none,
+          Object? profilePath = $none}) =>
       $apply(FieldCopyWithData({
         if (adult != null) #adult: adult,
-        if (alsoKnownAs != null) #alsoKnownAs: alsoKnownAs,
-        if (biography != null) #biography: biography,
-        if (birthday != null) #birthday: birthday,
+        if (alsoKnownAs != $none) #alsoKnownAs: alsoKnownAs,
+        if (biography != $none) #biography: biography,
+        if (birthday != $none) #birthday: birthday,
         if (deathday != $none) #deathday: deathday,
         if (gender != null) #gender: gender,
         if (homepage != $none) #homepage: homepage,
         if (id != null) #id: id,
-        if (imdbId != null) #imdbId: imdbId,
-        if (knownForDepartment != null) #knownForDepartment: knownForDepartment,
+        if (imdbId != $none) #imdbId: imdbId,
+        if (knownForDepartment != $none)
+          #knownForDepartment: knownForDepartment,
         if (name != null) #name: name,
-        if (placeOfBirth != null) #placeOfBirth: placeOfBirth,
-        if (popularity != null) #popularity: popularity,
-        if (profilePath != null) #profilePath: profilePath
+        if (placeOfBirth != $none) #placeOfBirth: placeOfBirth,
+        if (popularity != $none) #popularity: popularity,
+        if (profilePath != $none) #profilePath: profilePath
       }));
   @override
   ActorDetailModel $make(CopyWithData data) => ActorDetailModel(

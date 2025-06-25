@@ -79,7 +79,7 @@ class AppRouter {
         path: actorDetailsRoute,
         name: actorDetailsRoute,
         builder: (context, state) {
-          final actorId = state.extra as String?;
+          final actorId = state.extra as int?;
           return ActorDetailsScreen(key: state.pageKey, actorId: actorId!);
         },
       ),
