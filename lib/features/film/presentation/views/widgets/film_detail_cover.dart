@@ -1,17 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:film_magic/core/navigation/app_router.dart';
-import 'package:film_magic/features/film/data/models/film_list_model.dart';
+import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../core/utils/app_helper.dart';
-import 'film_rate_pill.dart';
-import 'genres_pill.dart';
+import 'film_detail_mini_pill.dart';
 
-class FilmPromoCard extends StatelessWidget {
-  const FilmPromoCard({super.key, required this.film});
+class FilmDetailCover extends StatelessWidget {
+  const FilmDetailCover({super.key, required this.filmDetail});
 
-  final FilmModel film;
+  final FilmDetailModel filmDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,10 @@ class FilmPromoCard extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: CachedNetworkImage(
-            imageUrl: AppHelper.buildImageUrl(film.posterPath!),
+            imageUrl: AppHelper.buildImageUrl(filmDetail.posterPath!),
             imageBuilder: (context, imageProvider) {
               return Hero(
-                tag: film.id,
+                tag: filmDetail.id,
                 child: Image(
                   image: imageProvider,
                   height: height,
@@ -64,35 +61,35 @@ class FilmPromoCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+              child: Column(
+                spacing: 4.0,
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: Column(
-                      spacing: 4.0,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FilmRatePill(rating: film.voteAverage),
-                        Text(
-                          film.title,
-                          style: Theme.of(context).textTheme.titleLarge
-                              ?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                        ),
-                        GenresPill(genreIds: film.genreIds),
-                      ],
-                    ),
+                  FilmDetailMiniPill(
+                    voteAverage: filmDetail.voteAverage,
+                    year: DateTime.parse(filmDetail.releaseDate).year,
+                    adult: filmDetail.adult,
                   ),
-                  IconButton.filled(
-                    onPressed: () => context.push(
-                      AppRouter.filmDetailsRoute,
-                      extra: film.id,
-                    ),
-                    icon: Icon(Icons.arrow_outward),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          filmDetail.genres.map((g) => g.name).join(' · '),
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                        ),
+                      ),
+                      if (filmDetail.runtime > 0)
+                        Text(
+                          '${filmDetail.runtime} min',
+                          style: Theme.of(
+                            context,
+                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
+                        ),
+                    ],
                   ),
                 ],
               ),

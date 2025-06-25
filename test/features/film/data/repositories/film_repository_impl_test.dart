@@ -488,7 +488,7 @@ void main() {
         ).thenAnswer((_) async => null);
 
         // Act
-        final call = () => repository.getFilmDetails(testFilmId);
+        call() => repository.getFilmDetails(testFilmId);
 
         // Assert
         await expectLater(call(), throwsA(isA<ServerFailure>()));

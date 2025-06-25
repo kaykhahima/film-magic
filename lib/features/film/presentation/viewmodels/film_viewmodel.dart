@@ -20,7 +20,6 @@ class FilmViewModel extends ChangeNotifier {
 
   // Genres
   GenreListModel? _genres;
-  bool _isLoadingGenres = false;
   String? _genresErrorMessage;
 
   // Getters
@@ -33,7 +32,6 @@ class FilmViewModel extends ChangeNotifier {
 
   // Genre getters
   GenreListModel? get genres => _genres;
-  bool get isLoadingGenres => _isLoadingGenres;
   String? get genresErrorMessage => _genresErrorMessage;
 
   // Load all film categories
@@ -95,16 +93,11 @@ class FilmViewModel extends ChangeNotifier {
 
   // Genre methods
   Future<void> _loadGenres() async {
-    _setGenresLoading(true);
-    _clearGenresError();
-
     try {
       _genres = await _filmRepository.getGenres();
       notifyListeners();
     } catch (e) {
-      _setGenresError('Failed to load genres: ${e.toString()}');
-    } finally {
-      _setGenresLoading(false);
+      _setError('Failed to load genres: ${e.toString()}');
     }
   }
 
@@ -122,7 +115,7 @@ class FilmViewModel extends ChangeNotifier {
       // If genres aren't loaded yet, fetch directly from repository
       return await _filmRepository.getGenreById(genreId);
     } catch (e) {
-      _setGenresError('Failed to get genre: ${e.toString()}');
+      _setError('Failed to get genre: ${e.toString()}');
       return null;
     }
   }
@@ -143,7 +136,7 @@ class FilmViewModel extends ChangeNotifier {
 
       return matchedGenres;
     } catch (e) {
-      _setGenresError('Failed to get genres by IDs: ${e.toString()}');
+      _setError('Failed to get genres by IDs: ${e.toString()}');
       return [];
     }
   }
@@ -161,22 +154,6 @@ class FilmViewModel extends ChangeNotifier {
 
   void _clearError() {
     _errorMessage = null;
-    notifyListeners();
-  }
-
-  // Genre helper methods
-  void _setGenresLoading(bool loading) {
-    _isLoadingGenres = loading;
-    notifyListeners();
-  }
-
-  void _setGenresError(String message) {
-    _genresErrorMessage = message;
-    notifyListeners();
-  }
-
-  void _clearGenresError() {
-    _genresErrorMessage = null;
     notifyListeners();
   }
 }

@@ -151,6 +151,50 @@ class DatabaseHelper {
         FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE
       )
     ''');
+
+    // Production companies table
+    await db.execute('''
+      CREATE TABLE production_companies(
+        id INTEGER,
+        film_id INTEGER,
+        name TEXT NOT NULL,
+        logo_path TEXT,
+        origin_country TEXT NOT NULL,
+        PRIMARY KEY (id, film_id),
+        FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE
+      )
+    ''');
+
+    // Production countries table
+    await db.execute('''
+      CREATE TABLE production_countries(
+        iso_3166_1 TEXT,
+        film_id INTEGER,
+        name TEXT NOT NULL,
+        PRIMARY KEY (iso_3166_1, film_id),
+        FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE
+      )
+    ''');
+
+    // Spoken languages table
+    await db.execute('''
+      CREATE TABLE spoken_languages(
+        iso_639_1 TEXT,
+        film_id INTEGER,
+        name TEXT NOT NULL,
+        english_name TEXT NOT NULL,
+        PRIMARY KEY (iso_639_1, film_id),
+        FOREIGN KEY (film_id) REFERENCES films (id) ON DELETE CASCADE
+      )
+    ''');
+
+    // Cache timestamps table for tracking when data was last cached
+    await db.execute('''
+      CREATE TABLE cache_timestamps(
+        key TEXT PRIMARY KEY,
+        timestamp TEXT NOT NULL
+      )
+    ''');
   }
 
   // TODO: Add other tables here

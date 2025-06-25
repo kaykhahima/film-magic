@@ -39,33 +39,33 @@ class _HomeScreenState extends State<HomeScreen> {
               slivers: [
                 const SliverAppBar(
                   expandedHeight: 300,
-                  elevation: 0,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: FilmsPromoCarousel(),
-                  ),
+                  flexibleSpace: FilmsPromoCarousel(),
                 ),
                 SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      if (filmViewModel.popularFilms != null)
-                        FilmList(
-                          title: 'Popular',
-                          films: filmViewModel.popularFilms!.results,
-                          isLoading: isLoading,
-                        ),
-                      if (filmViewModel.popularFilms != null)
-                        FilmList(
-                          title: 'Upcoming',
-                          films: filmViewModel.upcomingFilms!.results,
-                          isLoading: isLoading,
-                        ),
-                      if (filmViewModel.popularFilms != null)
-                        FilmList(
-                          title: 'Top Rated',
-                          films: filmViewModel.topRatedFilms!.results,
-                          isLoading: isLoading,
-                        ),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Column(
+                      children: [
+                        if (filmViewModel.popularFilms != null)
+                          FilmList(
+                            title: 'Popular',
+                            films: filmViewModel.popularFilms!.results,
+                            isLoading: isLoading,
+                          ),
+                        if (filmViewModel.popularFilms != null)
+                          FilmList(
+                            title: 'Upcoming',
+                            films: filmViewModel.upcomingFilms!.results,
+                            isLoading: isLoading,
+                          ),
+                        if (filmViewModel.popularFilms != null)
+                          FilmList(
+                            title: 'Top Rated',
+                            films: filmViewModel.topRatedFilms!.results,
+                            isLoading: isLoading,
+                          ),
+                      ],
+                    ),
                   ),
                 ),
               ],

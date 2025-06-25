@@ -15,6 +15,8 @@ class ApiConstants {
   static const String upcomingEndpoint = 'movie/upcoming';
   static const String movieDetailsEndpoint = 'movie/'; // Append movie_id
   static const String movieCreditsEndpoint = 'movie/'; // Append movie_id/credits
+  static const String movieSimilarEndpoint = 'movie/'; // Append movie_id/similar
+  static const String movieRecommendationsEndpoint = 'movie/'; // Append movie_id/recommendations
   static const String genreListEndpoint = 'genre/movie/list';
   
   // Headers

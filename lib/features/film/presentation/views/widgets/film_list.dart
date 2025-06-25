@@ -26,6 +26,7 @@ class FilmList extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16.0),
           child: FilmHeader(title: title),
         ),
+        Gap(16.0),
         SizedBox(
           height: 200,
           child: isLoading

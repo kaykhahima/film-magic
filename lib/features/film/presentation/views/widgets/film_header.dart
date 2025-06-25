@@ -13,16 +13,17 @@ class FilmHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: Theme.of(context).textTheme.titleLarge),
-        IconButton(
-          icon:
-              icon ??
-              Icon(
-                Icons.arrow_forward_ios,
-                color: Theme.of(context).colorScheme.onSurface,
-              ),
-          onPressed: onTap,
-          tooltip: 'More',
-        ),
+        if (onTap != null)
+          IconButton(
+            icon:
+                icon ??
+                Icon(
+                  Icons.arrow_forward_ios,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+            onPressed: onTap,
+            tooltip: 'More',
+          ),
       ],
     );
   }

@@ -26,7 +26,7 @@ class FilmContainer extends StatelessWidget {
         height: height,
         width: width,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.tertiary,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: ClipRRect(
@@ -34,7 +34,7 @@ class FilmContainer extends StatelessWidget {
           child: Stack(
             children: [
               CachedNetworkImage(
-                imageUrl: AppHelper.buildImageUrl(film.posterPath!),
+                imageUrl: AppHelper.buildImageUrl(film.posterPath ?? ''),
                 imageBuilder: (context, imageProvider) {
                   return Image(
                     image: imageProvider,

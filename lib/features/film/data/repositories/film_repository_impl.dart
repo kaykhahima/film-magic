@@ -1,6 +1,4 @@
-import 'package:film_magic/core/constants/api_constants.dart';
 import 'package:film_magic/core/errors/failures.dart';
-import 'package:film_magic/core/network/api_client.dart';
 import 'package:film_magic/core/network/network_info.dart';
 import 'package:film_magic/features/film/data/datasources/film_local_data_source.dart';
 import 'package:film_magic/features/film/data/datasources/film_remote_data_source.dart';
@@ -170,7 +168,7 @@ class FilmRepositoryImpl implements FilmRepository {
         final filmDetail = await _remoteDataSource.getFilmDetails(filmId);
 
         // Cache the results (assuming the method is implemented)
-        // await _localDataSource.cacheFilmDetails(filmDetail);
+        await _localDataSource.cacheFilmDetails(filmDetail);
 
         return filmDetail;
       } catch (e) {
@@ -199,7 +197,7 @@ class FilmRepositoryImpl implements FilmRepository {
         final filmCredits = await _remoteDataSource.getFilmCredits(filmId);
 
         // Cache the results (assuming the method is implemented)
-        // await _localDataSource.cacheFilmCredits(filmId, filmCredits);
+        await _localDataSource.cacheFilmCredits(filmId, filmCredits);
 
         return filmCredits;
       } catch (e) {
@@ -282,6 +280,64 @@ class FilmRepositoryImpl implements FilmRepository {
       );
 
       return genre;
+    } catch (e) {
+      if (e is NetworkFailure || e is ServerFailure) {
+        rethrow;
+      }
+      throw ServerFailure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<FilmListModel> getSimilarFilms(int filmId) async {
+    try {
+      // Try to get data from remote data source first
+      try {
+        final filmList = await _remoteDataSource.getSimilarFilms(filmId);
+
+        // Cache the results
+        await _localDataSource.cacheSimilarFilms(filmId, filmList);
+
+        return filmList;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getSimilarFilms(filmId);
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
+    } catch (e) {
+      if (e is NetworkFailure || e is ServerFailure) {
+        rethrow;
+      }
+      throw ServerFailure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<FilmListModel> getRecommendedFilms(int filmId) async {
+    try {
+      // Try to get data from remote data source first
+      try {
+        final filmList = await _remoteDataSource.getRecommendedFilms(filmId);
+
+        // Cache the results
+        await _localDataSource.cacheRecommendedFilms(filmId, filmList);
+
+        return filmList;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getRecommendedFilms(filmId);
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;

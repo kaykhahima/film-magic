@@ -1,3 +1,4 @@
+import 'package:film_magic/features/film/presentation/viewmodels/film_detail_viewmodel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -26,6 +27,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => sl<AuthViewModel>()),
         ChangeNotifierProvider(create: (_) => sl<FilmViewModel>()),
+        ChangeNotifierProvider(create: (_) => sl<FilmDetailViewModel>()),
       ],
       child: const App(),
     ),
