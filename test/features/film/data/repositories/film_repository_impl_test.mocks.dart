@@ -409,20 +409,4 @@ class MockFilmRemoteDataSource extends _i1.Mock
           ),
         )),
       ) as _i7.Future<_i2.FilmListModel>);
-
-  @override
-  _i7.Future<_i2.FilmListModel> getRecommendedFilms(int? filmId) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #getRecommendedFilms,
-          [filmId],
-        ),
-        returnValue: _i7.Future<_i2.FilmListModel>.value(_FakeFilmListModel_0(
-          this,
-          Invocation.method(
-            #getRecommendedFilms,
-            [filmId],
-          ),
-        )),
-      ) as _i7.Future<_i2.FilmListModel>);
 }

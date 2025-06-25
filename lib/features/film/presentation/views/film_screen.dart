@@ -28,24 +28,24 @@ class _FilmScreenState extends State<FilmScreen> {
         builder: (context, filmViewModel, child) {
           final isLoading = filmViewModel.isLoading;
           final errorMessage = filmViewModel.errorMessage;
-          
+
           if (errorMessage != null) {
             return Center(child: Text('Error: $errorMessage'));
           }
-          
+
           return RefreshIndicator(
             onRefresh: () => filmViewModel.loadAllFilms(),
             child: ListView(
               children: [
                 if (filmViewModel.nowPlayingFilms != null)
                   FilmList(
-                    title: 'Now Playing',
+                    title: 'Currently Playing',
                     films: filmViewModel.nowPlayingFilms!.results,
                     isLoading: isLoading,
                   ),
                 if (filmViewModel.popularFilms != null)
                   FilmList(
-                    title: 'Popular',
+                    title: 'Popular Films',
                     films: filmViewModel.popularFilms!.results,
                     isLoading: isLoading,
                   ),
@@ -57,7 +57,7 @@ class _FilmScreenState extends State<FilmScreen> {
                   ),
                 if (filmViewModel.upcomingFilms != null)
                   FilmList(
-                    title: 'Upcoming',
+                    title: 'New & Upcoming',
                     films: filmViewModel.upcomingFilms!.results,
                     isLoading: isLoading,
                   ),

@@ -71,7 +71,7 @@ class FilmRemoteDataSource {
 
   Future<FilmCreditsModel> getFilmCredits(int filmId) async {
     final response = await _apiClient.get(
-      '${ApiConstants.movieDetailsEndpoint}$filmId/credits',
+      '${ApiConstants.movieCreditsEndpoint}$filmId/credits',
       queryParameters: {
         ApiConstants.languageParam: ApiConstants.defaultLanguage,
       },
@@ -79,7 +79,7 @@ class FilmRemoteDataSource {
 
     return FilmCreditsModelMapper.fromMap(response);
   }
-  
+
   Future<GenreListModel> getGenres() async {
     final response = await _apiClient.get(
       ApiConstants.genreListEndpoint,
@@ -90,22 +90,10 @@ class FilmRemoteDataSource {
 
     return GenreListModelMapper.fromMap(response);
   }
-  
+
   Future<FilmListModel> getSimilarFilms(int filmId) async {
     final response = await _apiClient.get(
       '${ApiConstants.movieSimilarEndpoint}$filmId/similar',
-      queryParameters: {
-        ApiConstants.languageParam: ApiConstants.defaultLanguage,
-        ApiConstants.pageParam: ApiConstants.defaultPage.toString(),
-      },
-    );
-
-    return FilmListModelMapper.fromMap(response);
-  }
-  
-  Future<FilmListModel> getRecommendedFilms(int filmId) async {
-    final response = await _apiClient.get(
-      '${ApiConstants.movieRecommendationsEndpoint}$filmId/recommendations',
       queryParameters: {
         ApiConstants.languageParam: ApiConstants.defaultLanguage,
         ApiConstants.pageParam: ApiConstants.defaultPage.toString(),

@@ -25,22 +25,17 @@ abstract class FilmRepository {
   ///
   /// [filmId] - The ID of the film to retrieve credits for
   Future<FilmCreditsModel> getFilmCredits(int filmId);
-  
+
   /// Retrieves a list of all movie genres
   Future<GenreListModel> getGenres();
-  
+
   /// Retrieves a specific genre by its ID
   ///
   /// [genreId] - The ID of the genre to retrieve
   Future<Genre> getGenreById(int genreId);
-  
+
   /// Retrieves a list of similar films for a specific film
   ///
   /// [filmId] - The ID of the film to retrieve similar films for
   Future<FilmListModel> getSimilarFilms(int filmId);
-  
-  /// Retrieves a list of recommended films for a specific film
-  ///
-  /// [filmId] - The ID of the film to retrieve recommendations for
-  Future<FilmListModel> getRecommendedFilms(int filmId);
 }

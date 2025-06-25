@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final errorMessage = filmViewModel.errorMessage;
 
         if (errorMessage != null) {
-          return Center(child: Text('Error: $errorMessage'));
+          return Center(child: Text(errorMessage));
         }
 
         return Scaffold(
@@ -48,19 +48,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         if (filmViewModel.popularFilms != null)
                           FilmList(
-                            title: 'Popular',
+                            title: 'Popular Films',
                             films: filmViewModel.popularFilms!.results,
                             isLoading: isLoading,
                           ),
                         if (filmViewModel.popularFilms != null)
                           FilmList(
-                            title: 'Upcoming',
+                            title: 'New & Upcoming',
                             films: filmViewModel.upcomingFilms!.results,
                             isLoading: isLoading,
                           ),
                         if (filmViewModel.popularFilms != null)
                           FilmList(
-                            title: 'Top Rated',
+                            title: 'Top Rated Films',
                             films: filmViewModel.topRatedFilms!.results,
                             isLoading: isLoading,
                           ),

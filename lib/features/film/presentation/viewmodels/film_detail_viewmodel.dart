@@ -79,19 +79,4 @@ class FilmDetailViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
-  // Load recommended films
-  Future<void> loadRecommendedFilms(int filmId) async {
-    _setLoading(true);
-    _clearError();
-
-    try {
-      final films = await _filmRepository.getRecommendedFilms(filmId);
-      _recommendedFilms = films;
-    } catch (e) {
-      _setError('Failed to load recommended films: ${e.toString()}');
-    } finally {
-      _setLoading(false);
-    }
-  }
 }
