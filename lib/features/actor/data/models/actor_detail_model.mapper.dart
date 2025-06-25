@@ -24,7 +24,7 @@ class ActorDetailModelMapper extends ClassMapperBase<ActorDetailModel> {
   static const Field<ActorDetailModel, bool> _f$adult = Field('adult', _$adult);
   static List<String> _$alsoKnownAs(ActorDetailModel v) => v.alsoKnownAs;
   static const Field<ActorDetailModel, List<String>> _f$alsoKnownAs =
-      Field('alsoKnownAs', _$alsoKnownAs);
+      Field('alsoKnownAs', _$alsoKnownAs, key: r'also_known_as');
   static String _$biography(ActorDetailModel v) => v.biography;
   static const Field<ActorDetailModel, String> _f$biography =
       Field('biography', _$biography);
@@ -44,22 +44,23 @@ class ActorDetailModelMapper extends ClassMapperBase<ActorDetailModel> {
   static const Field<ActorDetailModel, int> _f$id = Field('id', _$id);
   static String _$imdbId(ActorDetailModel v) => v.imdbId;
   static const Field<ActorDetailModel, String> _f$imdbId =
-      Field('imdbId', _$imdbId);
+      Field('imdbId', _$imdbId, key: r'imdb_id');
   static String _$knownForDepartment(ActorDetailModel v) =>
       v.knownForDepartment;
-  static const Field<ActorDetailModel, String> _f$knownForDepartment =
-      Field('knownForDepartment', _$knownForDepartment);
+  static const Field<ActorDetailModel, String> _f$knownForDepartment = Field(
+      'knownForDepartment', _$knownForDepartment,
+      key: r'known_for_department');
   static String _$name(ActorDetailModel v) => v.name;
   static const Field<ActorDetailModel, String> _f$name = Field('name', _$name);
   static String _$placeOfBirth(ActorDetailModel v) => v.placeOfBirth;
   static const Field<ActorDetailModel, String> _f$placeOfBirth =
-      Field('placeOfBirth', _$placeOfBirth);
+      Field('placeOfBirth', _$placeOfBirth, key: r'place_of_birth');
   static double _$popularity(ActorDetailModel v) => v.popularity;
   static const Field<ActorDetailModel, double> _f$popularity =
       Field('popularity', _$popularity);
   static String _$profilePath(ActorDetailModel v) => v.profilePath;
   static const Field<ActorDetailModel, String> _f$profilePath =
-      Field('profilePath', _$profilePath);
+      Field('profilePath', _$profilePath, key: r'profile_path');
 
   @override
   final MappableFields<ActorDetailModel> fields = const {

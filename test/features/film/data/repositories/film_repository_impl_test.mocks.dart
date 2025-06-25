@@ -7,6 +7,14 @@ import 'dart:async' as _i3;
 
 import 'package:film_magic/core/network/api_client.dart' as _i2;
 import 'package:film_magic/core/network/network_info.dart' as _i4;
+import 'package:film_magic/features/film/data/datasources/film_local_data_source.dart'
+    as _i5;
+import 'package:film_magic/features/film/data/models/film_credits_model.dart'
+    as _i8;
+import 'package:film_magic/features/film/data/models/film_detail_model.dart'
+    as _i7;
+import 'package:film_magic/features/film/data/models/film_list_model.dart'
+    as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -108,6 +116,107 @@ class MockNetworkInfo extends _i1.Mock implements _i4.NetworkInfo {
   @override
   _i3.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
+        returnValue: _i3.Future<bool>.value(false),
+      ) as _i3.Future<bool>);
+}
+
+/// A class which mocks [FilmLocalDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFilmLocalDataSource extends _i1.Mock
+    implements _i5.FilmLocalDataSource {
+  MockFilmLocalDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i3.Future<void> cacheFilmList(
+    String? category,
+    _i6.FilmListModel? filmList,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheFilmList,
+          [
+            category,
+            filmList,
+          ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<_i6.FilmListModel?> getFilmList(String? category) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFilmList,
+          [category],
+        ),
+        returnValue: _i3.Future<_i6.FilmListModel?>.value(),
+      ) as _i3.Future<_i6.FilmListModel?>);
+
+  @override
+  _i3.Future<void> cacheFilmDetails(_i7.FilmDetailModel? filmDetail) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheFilmDetails,
+          [filmDetail],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<_i7.FilmDetailModel?> getFilmDetails(int? filmId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFilmDetails,
+          [filmId],
+        ),
+        returnValue: _i3.Future<_i7.FilmDetailModel?>.value(),
+      ) as _i3.Future<_i7.FilmDetailModel?>);
+
+  @override
+  _i3.Future<void> cacheFilmCredits(
+    int? filmId,
+    _i8.FilmCreditsModel? credits,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #cacheFilmCredits,
+          [
+            filmId,
+            credits,
+          ],
+        ),
+        returnValue: _i3.Future<void>.value(),
+        returnValueForMissingStub: _i3.Future<void>.value(),
+      ) as _i3.Future<void>);
+
+  @override
+  _i3.Future<_i8.FilmCreditsModel?> getFilmCredits(int? filmId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFilmCredits,
+          [filmId],
+        ),
+        returnValue: _i3.Future<_i8.FilmCreditsModel?>.value(),
+      ) as _i3.Future<_i8.FilmCreditsModel?>);
+
+  @override
+  _i3.Future<bool> isCacheValid(
+    String? category,
+    Duration? maxAge,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #isCacheValid,
+          [
+            category,
+            maxAge,
+          ],
+        ),
         returnValue: _i3.Future<bool>.value(false),
       ) as _i3.Future<bool>);
 }

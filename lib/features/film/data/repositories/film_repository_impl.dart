@@ -2,39 +2,69 @@ import 'package:film_magic/core/constants/api_constants.dart';
 import 'package:film_magic/core/errors/failures.dart';
 import 'package:film_magic/core/network/api_client.dart';
 import 'package:film_magic/core/network/network_info.dart';
+import 'package:film_magic/features/film/data/datasources/film_local_data_source.dart';
+import 'package:film_magic/features/film/data/datasources/film_remote_data_source.dart';
 import 'package:film_magic/features/film/data/models/film_credits_model.dart';
 import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
 import 'package:film_magic/features/film/data/repositories/film_repository.dart';
 
 class FilmRepositoryImpl implements FilmRepository {
-  final ApiClient _apiClient;
   final NetworkInfo _networkInfo;
+  final FilmLocalDataSource _localDataSource;
+  final FilmRemoteDataSource _remoteDataSource;
 
-  FilmRepositoryImpl(this._apiClient, this._networkInfo);
+  FilmRepositoryImpl({
+    required NetworkInfo networkInfo,
+    required FilmLocalDataSource localDataSource,
+    required FilmRemoteDataSource remoteDataSource,
+  }) : _networkInfo = networkInfo,
+       _localDataSource = localDataSource,
+       _remoteDataSource = remoteDataSource;
 
   /// Checks if the device is connected to the internet
-  /// Throws a NetworkFailure if not connected
-  Future<void> _checkNetworkConnection() async {
-    if (!await _networkInfo.isConnected) {
-      throw NetworkFailure(message: 'No internet connection');
-    }
+  /// Returns true if connected, false otherwise
+  Future<bool> _isConnected() async {
+    return await _networkInfo.isConnected;
   }
 
   @override
   Future<FilmListModel> getNowPlayingFilms() async {
     try {
-      await _checkNetworkConnection();
+      // Check if we're online
+      final isConnected = await _isConnected();
 
-      final response = await _apiClient.get(
-        ApiConstants.nowPlayingEndpoint,
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-          ApiConstants.pageParam: ApiConstants.defaultPage.toString(),
-        },
-      );
+      // If we're online, try to fetch from remote data source first
+      if (isConnected) {
+        try {
+          final filmList = await _remoteDataSource.getNowPlayingFilms();
 
-      return FilmListModelMapper.fromMap(response);
+          // Cache the results
+          await _localDataSource.cacheFilmList('now_playing', filmList);
+
+          return filmList;
+        } catch (e) {
+          // If remote data source fails, try to get from local data source
+          final cachedData = await _localDataSource.getFilmList('now_playing');
+          if (cachedData != null) {
+            return cachedData;
+          }
+
+          // If no cache, rethrow the original error
+          rethrow;
+        }
+      } else {
+        // We're offline, try to get from local data source
+        final cachedData = await _localDataSource.getFilmList('now_playing');
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, throw network failure
+        throw NetworkFailure(
+          message: 'No internet connection and no cached data available',
+        );
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;
@@ -46,17 +76,24 @@ class FilmRepositoryImpl implements FilmRepository {
   @override
   Future<FilmListModel> getPopularFilms() async {
     try {
-      await _checkNetworkConnection();
+      // Try to get data from remote data source first
+      try {
+        final filmList = await _remoteDataSource.getPopularFilms();
 
-      final response = await _apiClient.get(
-        ApiConstants.popularEndpoint,
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-          ApiConstants.pageParam: ApiConstants.defaultPage.toString(),
-        },
-      );
+        // Cache the results
+        await _localDataSource.cacheFilmList('popular', filmList);
 
-      return FilmListModelMapper.fromMap(response);
+        return filmList;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getFilmList('popular');
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;
@@ -68,17 +105,24 @@ class FilmRepositoryImpl implements FilmRepository {
   @override
   Future<FilmListModel> getTopRatedFilms() async {
     try {
-      await _checkNetworkConnection();
+      // Try to get data from remote data source first
+      try {
+        final filmList = await _remoteDataSource.getTopRatedFilms();
 
-      final response = await _apiClient.get(
-        ApiConstants.topRatedEndpoint,
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-          ApiConstants.pageParam: ApiConstants.defaultPage.toString(),
-        },
-      );
+        // Cache the results
+        await _localDataSource.cacheFilmList('top_rated', filmList);
 
-      return FilmListModelMapper.fromMap(response);
+        return filmList;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getFilmList('top_rated');
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;
@@ -90,17 +134,24 @@ class FilmRepositoryImpl implements FilmRepository {
   @override
   Future<FilmListModel> getUpcomingFilms() async {
     try {
-      await _checkNetworkConnection();
+      // Try to get data from remote data source first
+      try {
+        final filmList = await _remoteDataSource.getUpcomingFilms();
 
-      final response = await _apiClient.get(
-        ApiConstants.upcomingEndpoint,
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-          ApiConstants.pageParam: ApiConstants.defaultPage.toString(),
-        },
-      );
+        // Cache the results
+        await _localDataSource.cacheFilmList('upcoming', filmList);
 
-      return FilmListModelMapper.fromMap(response);
+        return filmList;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getFilmList('upcoming');
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;
@@ -112,16 +163,24 @@ class FilmRepositoryImpl implements FilmRepository {
   @override
   Future<FilmDetailModel> getFilmDetails(int filmId) async {
     try {
-      await _checkNetworkConnection();
+      // Try to get data from remote data source first
+      try {
+        final filmDetail = await _remoteDataSource.getFilmDetails(filmId);
 
-      final response = await _apiClient.get(
-        '${ApiConstants.movieDetailsEndpoint}$filmId',
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-        },
-      );
+        // Cache the results (assuming the method is implemented)
+        // await _localDataSource.cacheFilmDetails(filmDetail);
 
-      return FilmDetailModelMapper.fromMap(response);
+        return filmDetail;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getFilmDetails(filmId);
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;
@@ -133,16 +192,24 @@ class FilmRepositoryImpl implements FilmRepository {
   @override
   Future<FilmCreditsModel> getFilmCredits(int filmId) async {
     try {
-      await _checkNetworkConnection();
+      // Try to get data from remote data source first
+      try {
+        final filmCredits = await _remoteDataSource.getFilmCredits(filmId);
 
-      final response = await _apiClient.get(
-        '${ApiConstants.movieDetailsEndpoint}$filmId/credits',
-        queryParameters: {
-          ApiConstants.languageParam: ApiConstants.defaultLanguage,
-        },
-      );
+        // Cache the results (assuming the method is implemented)
+        // await _localDataSource.cacheFilmCredits(filmId, filmCredits);
 
-      return FilmCreditsModelMapper.fromMap(response);
+        return filmCredits;
+      } catch (e) {
+        // If remote data source fails, try to get from local data source
+        final cachedData = await _localDataSource.getFilmCredits(filmId);
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, rethrow the original error
+        rethrow;
+      }
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;

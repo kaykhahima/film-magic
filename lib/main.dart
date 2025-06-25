@@ -1,10 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'core/di/service_locator.dart';
 import 'core/navigation/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/authentication/presentation/viewmodels/auth_viewmodel.dart';
+import 'features/film/presentation/viewmodels/film_viewmodel.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,12 +15,18 @@ void main() async {
   // Initialize Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
+
   // Initialize service locator
   await initServiceLocator();
 
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => sl<AuthViewModel>())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => sl<AuthViewModel>()),
+        ChangeNotifierProvider(create: (_) => sl<FilmViewModel>()),
+      ],
       child: const App(),
     ),
   );

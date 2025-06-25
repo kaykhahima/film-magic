@@ -2,7 +2,7 @@ import 'package:dart_mappable/dart_mappable.dart';
 
 part 'actor_detail_model.mapper.dart';
 
-@MappableClass()
+@MappableClass(caseStyle: CaseStyle.snakeCase)
 class ActorDetailModel with ActorDetailModelMappable {
   final bool adult;
   final List<String> alsoKnownAs;
