@@ -20,7 +20,7 @@ class DarkenedBackground extends StatelessWidget {
       children: [
         Image.asset(
           imagePath ?? Images.coverPhoto,
-          fit: BoxFit.fitHeight,
+          fit: BoxFit.cover,
           height: double.infinity,
           width: double.infinity,
           alignment: Alignment.centerLeft,

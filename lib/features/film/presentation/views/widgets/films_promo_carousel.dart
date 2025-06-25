@@ -17,16 +17,18 @@ class FilmsPromoCarousel extends StatelessWidget {
       return const Center(child: Text('No films available'));
     }
 
-    //limit the number of films to 5
-    if (carouselFilms.length > 5) {
-      carouselFilms = carouselFilms.sublist(10, 15);
-    }
+    // //limit the number of films to 5
+    // if (carouselFilms.length > 5) {
+    //   carouselFilms = carouselFilms.sublist(10, 15);
+    // }
 
     return ExpandableCarousel(
       options: ExpandableCarouselOptions(
         viewportFraction: 1.0,
         autoPlay: true,
         showIndicator: false,
+        enableInfiniteScroll: true,
+        autoPlayInterval: const Duration(seconds: 4),
         slideIndicator: CircularStaticIndicator(
           slideIndicatorOptions: SlideIndicatorOptions(
             alignment: Alignment.bottomRight,

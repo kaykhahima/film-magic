@@ -38,8 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: CustomScrollView(
               slivers: [
                 const SliverAppBar(
-                  floating: true,
-                  forceElevated: true,
                   expandedHeight: 300,
                   elevation: 0,
                   flexibleSpace: FlexibleSpaceBar(

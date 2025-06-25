@@ -33,10 +33,11 @@ class FilmList extends StatelessWidget {
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: films.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   itemBuilder: (context, index) {
                     final film = films[index];
                     return Padding(
-                      padding: const EdgeInsets.only(left: 16.0),
+                      padding: const EdgeInsets.only(right: 8.0),
                       child: FilmContainer(film: film),
                     );
                   },

@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:film_magic/core/navigation/app_router.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
-import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../../../../../core/utils/app_helper.dart';
 import 'film_rate_pill.dart';
@@ -67,21 +65,24 @@ class FilmPromoCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Column(
-                    spacing: 4.0,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FilmRatePill(rating: film.voteAverage),
-                      Text(
-                        film.title,
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                  Expanded(
+                    child: Column(
+                      spacing: 4.0,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FilmRatePill(rating: film.voteAverage),
+                        Text(
+                          film.title,
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                         ),
-                      ),
-                      GenresPill(genreIds: film.genreIds),
-                    ],
+                        GenresPill(genreIds: film.genreIds),
+                      ],
+                    ),
                   ),
                   IconButton.filled(
                     onPressed: () => context.push(
