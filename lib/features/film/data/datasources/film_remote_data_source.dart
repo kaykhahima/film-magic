@@ -3,6 +3,7 @@ import 'package:film_magic/core/network/api_client.dart';
 import 'package:film_magic/features/film/data/models/film_credits_model.dart';
 import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
+import 'package:film_magic/features/film/data/models/genre_list_model.dart';
 
 class FilmRemoteDataSource {
   final ApiClient _apiClient;
@@ -77,5 +78,16 @@ class FilmRemoteDataSource {
     );
 
     return FilmCreditsModelMapper.fromMap(response);
+  }
+  
+  Future<GenreListModel> getGenres() async {
+    final response = await _apiClient.get(
+      ApiConstants.genreListEndpoint,
+      queryParameters: {
+        ApiConstants.languageParam: ApiConstants.defaultLanguage,
+      },
+    );
+
+    return GenreListModelMapper.fromMap(response);
   }
 }

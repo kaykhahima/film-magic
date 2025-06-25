@@ -6,6 +6,7 @@ class ApiConstants {
   static const String personEndpoint = 'person/';
   static const String movieEndpoint = 'movie/';
   static const String searchEndpoint = 'search/';
+  static const String genreEndpoint = 'genre/';
   
   // Movie Specific Endpoints
   static const String nowPlayingEndpoint = 'movie/now_playing';
@@ -14,6 +15,7 @@ class ApiConstants {
   static const String upcomingEndpoint = 'movie/upcoming';
   static const String movieDetailsEndpoint = 'movie/'; // Append movie_id
   static const String movieCreditsEndpoint = 'movie/'; // Append movie_id/credits
+  static const String genreListEndpoint = 'genre/movie/list';
   
   // Headers
   static const String authorizationHeader = 'Authorization';

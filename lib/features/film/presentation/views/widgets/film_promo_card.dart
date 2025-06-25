@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:film_magic/core/navigation/app_router.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
+import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/utils/app_helper.dart';
+import 'film_rate_pill.dart';
+import 'genres_pill.dart';
 
 class FilmPromoCard extends StatelessWidget {
   const FilmPromoCard({super.key, required this.film});
@@ -13,7 +17,7 @@ class FilmPromoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const double height = 400 - kToolbarHeight;
+    const double height = 370;
     return Stack(
       children: [
         SizedBox(
@@ -64,36 +68,11 @@ class FilmPromoCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Column(
+                    spacing: 4.0,
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 80,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(24.0),
-                        ),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Icon(
-                                Icons.star,
-                                color: Colors.amber,
-                                size: 28.0,
-                              ),
-                            ),
-                            Text(
-                              film.voteAverage.toStringAsFixed(1),
-                              style: Theme.of(context).textTheme.bodyLarge
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      FilmRatePill(rating: film.voteAverage),
                       Text(
                         film.title,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
@@ -101,12 +80,7 @@ class FilmPromoCard extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Text(
-                        'Genres: ${film.genreIds.toString()}',
-                        style: Theme.of(
-                          context,
-                        ).textTheme.bodyMedium?.copyWith(color: Colors.white),
-                      ),
+                      GenresPill(genreIds: film.genreIds),
                     ],
                   ),
                   IconButton.filled(

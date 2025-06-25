@@ -9,6 +9,8 @@ import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
 import 'package:film_magic/features/film/data/repositories/film_repository.dart';
 
+import '../models/genre_list_model.dart';
+
 class FilmRepositoryImpl implements FilmRepository {
   final NetworkInfo _networkInfo;
   final FilmLocalDataSource _localDataSource;
@@ -210,6 +212,76 @@ class FilmRepositoryImpl implements FilmRepository {
         // If no cache, rethrow the original error
         rethrow;
       }
+    } catch (e) {
+      if (e is NetworkFailure || e is ServerFailure) {
+        rethrow;
+      }
+      throw ServerFailure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<GenreListModel> getGenres() async {
+    try {
+      // Check if we're online
+      final isConnected = await _isConnected();
+
+      // If we're online, try to fetch from remote data source first
+      if (isConnected) {
+        try {
+          final genreList = await _remoteDataSource.getGenres();
+
+          // Cache the results
+          await _localDataSource.cacheGenres(genreList);
+
+          return genreList;
+        } catch (e) {
+          // If remote data source fails, try to get from local data source
+          final cachedData = await _localDataSource.getGenres();
+          if (cachedData != null) {
+            return cachedData;
+          }
+
+          // If no cache, rethrow the original error
+          rethrow;
+        }
+      } else {
+        // We're offline, try to get from local data source
+        final cachedData = await _localDataSource.getGenres();
+        if (cachedData != null) {
+          return cachedData;
+        }
+
+        // If no cache, throw network failure
+        throw NetworkFailure(
+          message: 'No internet connection and no cached data available',
+        );
+      }
+    } catch (e) {
+      if (e is NetworkFailure || e is ServerFailure) {
+        rethrow;
+      }
+      throw ServerFailure(message: e.toString());
+    }
+  }
+
+  @override
+  Future<Genre> getGenreById(int genreId) async {
+    try {
+      // Try to get from local data source first since it's more efficient
+      final cachedGenre = await _localDataSource.getGenreById(genreId);
+      if (cachedGenre != null) {
+        return cachedGenre;
+      }
+
+      // If not in cache, fetch all genres and find the one we need
+      final genreList = await getGenres();
+      final genre = genreList.genres.firstWhere(
+        (genre) => genre.id == genreId,
+        orElse: () => throw ServerFailure(message: 'Genre not found'),
+      );
+
+      return genre;
     } catch (e) {
       if (e is NetworkFailure || e is ServerFailure) {
         rethrow;

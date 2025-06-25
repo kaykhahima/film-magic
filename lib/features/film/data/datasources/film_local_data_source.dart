@@ -4,6 +4,7 @@ import 'package:film_magic/core/database/database_helper.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
 import 'package:film_magic/features/film/data/models/film_detail_model.dart';
 import 'package:film_magic/features/film/data/models/film_credits_model.dart';
+import 'package:film_magic/features/film/data/models/genre_list_model.dart';
 
 class FilmLocalDataSource {
   final DatabaseHelper _databaseHelper;
@@ -170,5 +171,54 @@ class FilmLocalDataSource {
     final now = DateTime.now();
 
     return now.difference(cachedAt) <= maxAge;
+  }
+
+  // Genre methods
+  Future<void> cacheGenres(GenreListModel genreList) async {
+    print('Caching ${genreList.genres.length} genres');
+
+    // Save each genre
+    for (final genre in genreList.genres) {
+      await _databaseHelper.insert('genres', {
+        'id': genre.id,
+        'name': genre.name,
+      });
+    }
+
+    // Save the timestamp for cache validation
+    await _databaseHelper.insert('cache_timestamps', {
+      'key': 'genres',
+      'timestamp': DateTime.now().toIso8601String(),
+    });
+  }
+
+  Future<GenreListModel?> getGenres() async {
+    // Get all genres from the database
+    final genreMaps = await _databaseHelper.query('genres');
+
+    if (genreMaps.isEmpty) return null;
+
+    final genres = genreMaps
+        .map((map) => Genre(id: map['id'] as int, name: map['name'] as String))
+        .toList();
+
+    return GenreListModel(genres: genres);
+  }
+
+  Future<Genre?> getGenreById(int genreId) async {
+    // Get the specific genre from the database
+    final genreMaps = await _databaseHelper.query(
+      'genres',
+      where: 'id = ?',
+      whereArgs: [genreId],
+      limit: 1,
+    );
+
+    if (genreMaps.isEmpty) return null;
+
+    return Genre(
+      id: genreMaps.first['id'] as int,
+      name: genreMaps.first['name'] as String,
+    );
   }
 }

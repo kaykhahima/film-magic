@@ -5,12 +5,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i6;
 
-import 'package:film_magic/core/network/api_client.dart' as _i5;
-import 'package:film_magic/core/network/network_info.dart' as _i7;
+import 'package:film_magic/core/network/network_info.dart' as _i5;
 import 'package:film_magic/features/film/data/datasources/film_local_data_source.dart'
-    as _i8;
+    as _i7;
 import 'package:film_magic/features/film/data/datasources/film_remote_data_source.dart'
-    as _i9;
+    as _i8;
 import 'package:film_magic/features/film/data/models/film_credits_model.dart'
     as _i4;
 import 'package:film_magic/features/film/data/models/film_detail_model.dart'
@@ -33,8 +32,8 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeUri_0 extends _i1.SmartFake implements Uri {
-  _FakeUri_0(
+class _FakeFilmListModel_0 extends _i1.SmartFake implements _i2.FilmListModel {
+  _FakeFilmListModel_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -43,19 +42,9 @@ class _FakeUri_0 extends _i1.SmartFake implements Uri {
         );
 }
 
-class _FakeFilmListModel_1 extends _i1.SmartFake implements _i2.FilmListModel {
-  _FakeFilmListModel_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeFilmDetailModel_2 extends _i1.SmartFake
+class _FakeFilmDetailModel_1 extends _i1.SmartFake
     implements _i3.FilmDetailModel {
-  _FakeFilmDetailModel_2(
+  _FakeFilmDetailModel_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -64,85 +53,21 @@ class _FakeFilmDetailModel_2 extends _i1.SmartFake
         );
 }
 
-class _FakeFilmCreditsModel_3 extends _i1.SmartFake
+class _FakeFilmCreditsModel_2 extends _i1.SmartFake
     implements _i4.FilmCreditsModel {
-  _FakeFilmCreditsModel_3(
+  _FakeFilmCreditsModel_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
           parent,
           parentInvocation,
         );
-}
-
-/// A class which mocks [ApiClient].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockApiClient extends _i1.Mock implements _i5.ApiClient {
-  MockApiClient() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  Uri buildUrl(
-    String? endpoint, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #buildUrl,
-          [endpoint],
-          {#queryParameters: queryParameters},
-        ),
-        returnValue: _FakeUri_0(
-          this,
-          Invocation.method(
-            #buildUrl,
-            [endpoint],
-            {#queryParameters: queryParameters},
-          ),
-        ),
-      ) as Uri);
-
-  @override
-  _i6.Future<Map<String, dynamic>> get(
-    String? endpoint, {
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #get,
-          [endpoint],
-          {#queryParameters: queryParameters},
-        ),
-        returnValue:
-            _i6.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i6.Future<Map<String, dynamic>>);
-
-  @override
-  _i6.Future<Map<String, dynamic>> post(
-    String? endpoint, {
-    required Map<String, dynamic>? body,
-    Map<String, dynamic>? queryParameters,
-  }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #post,
-          [endpoint],
-          {
-            #body: body,
-            #queryParameters: queryParameters,
-          },
-        ),
-        returnValue:
-            _i6.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i6.Future<Map<String, dynamic>>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i5.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
@@ -158,7 +83,7 @@ class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilmLocalDataSource extends _i1.Mock
-    implements _i8.FilmLocalDataSource {
+    implements _i7.FilmLocalDataSource {
   MockFilmLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
@@ -259,7 +184,7 @@ class MockFilmLocalDataSource extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilmRemoteDataSource extends _i1.Mock
-    implements _i9.FilmRemoteDataSource {
+    implements _i8.FilmRemoteDataSource {
   MockFilmRemoteDataSource() {
     _i1.throwOnMissingStub(this);
   }
@@ -270,7 +195,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           #getNowPlayingFilms,
           [],
         ),
-        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_0(
           this,
           Invocation.method(
             #getNowPlayingFilms,
@@ -285,7 +210,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           #getPopularFilms,
           [],
         ),
-        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_0(
           this,
           Invocation.method(
             #getPopularFilms,
@@ -300,7 +225,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           #getTopRatedFilms,
           [],
         ),
-        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_0(
           this,
           Invocation.method(
             #getTopRatedFilms,
@@ -315,7 +240,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           #getUpcomingFilms,
           [],
         ),
-        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_0(
           this,
           Invocation.method(
             #getUpcomingFilms,
@@ -332,7 +257,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           [filmId],
         ),
         returnValue:
-            _i6.Future<_i3.FilmDetailModel>.value(_FakeFilmDetailModel_2(
+            _i6.Future<_i3.FilmDetailModel>.value(_FakeFilmDetailModel_1(
           this,
           Invocation.method(
             #getFilmDetails,
@@ -349,7 +274,7 @@ class MockFilmRemoteDataSource extends _i1.Mock
           [filmId],
         ),
         returnValue:
-            _i6.Future<_i4.FilmCreditsModel>.value(_FakeFilmCreditsModel_3(
+            _i6.Future<_i4.FilmCreditsModel>.value(_FakeFilmCreditsModel_2(
           this,
           Invocation.method(
             #getFilmCredits,
