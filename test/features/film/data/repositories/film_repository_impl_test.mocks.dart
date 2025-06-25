@@ -3,18 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i6;
 
-import 'package:film_magic/core/network/api_client.dart' as _i2;
-import 'package:film_magic/core/network/network_info.dart' as _i4;
+import 'package:film_magic/core/network/api_client.dart' as _i5;
+import 'package:film_magic/core/network/network_info.dart' as _i7;
 import 'package:film_magic/features/film/data/datasources/film_local_data_source.dart'
-    as _i5;
-import 'package:film_magic/features/film/data/models/film_credits_model.dart'
     as _i8;
+import 'package:film_magic/features/film/data/datasources/film_remote_data_source.dart'
+    as _i9;
+import 'package:film_magic/features/film/data/models/film_credits_model.dart'
+    as _i4;
 import 'package:film_magic/features/film/data/models/film_detail_model.dart'
-    as _i7;
+    as _i3;
 import 'package:film_magic/features/film/data/models/film_list_model.dart'
-    as _i6;
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -41,10 +43,42 @@ class _FakeUri_0 extends _i1.SmartFake implements Uri {
         );
 }
 
+class _FakeFilmListModel_1 extends _i1.SmartFake implements _i2.FilmListModel {
+  _FakeFilmListModel_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFilmDetailModel_2 extends _i1.SmartFake
+    implements _i3.FilmDetailModel {
+  _FakeFilmDetailModel_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFilmCreditsModel_3 extends _i1.SmartFake
+    implements _i4.FilmCreditsModel {
+  _FakeFilmCreditsModel_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [ApiClient].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApiClient extends _i1.Mock implements _i2.ApiClient {
+class MockApiClient extends _i1.Mock implements _i5.ApiClient {
   MockApiClient() {
     _i1.throwOnMissingStub(this);
   }
@@ -71,7 +105,7 @@ class MockApiClient extends _i1.Mock implements _i2.ApiClient {
       ) as Uri);
 
   @override
-  _i3.Future<Map<String, dynamic>> get(
+  _i6.Future<Map<String, dynamic>> get(
     String? endpoint, {
     Map<String, dynamic>? queryParameters,
   }) =>
@@ -82,11 +116,11 @@ class MockApiClient extends _i1.Mock implements _i2.ApiClient {
           {#queryParameters: queryParameters},
         ),
         returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+            _i6.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i6.Future<Map<String, dynamic>>);
 
   @override
-  _i3.Future<Map<String, dynamic>> post(
+  _i6.Future<Map<String, dynamic>> post(
     String? endpoint, {
     required Map<String, dynamic>? body,
     Map<String, dynamic>? queryParameters,
@@ -101,38 +135,38 @@ class MockApiClient extends _i1.Mock implements _i2.ApiClient {
           },
         ),
         returnValue:
-            _i3.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
-      ) as _i3.Future<Map<String, dynamic>>);
+            _i6.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i6.Future<Map<String, dynamic>>);
 }
 
 /// A class which mocks [NetworkInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockNetworkInfo extends _i1.Mock implements _i4.NetworkInfo {
+class MockNetworkInfo extends _i1.Mock implements _i7.NetworkInfo {
   MockNetworkInfo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<bool> get isConnected => (super.noSuchMethod(
+  _i6.Future<bool> get isConnected => (super.noSuchMethod(
         Invocation.getter(#isConnected),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
 }
 
 /// A class which mocks [FilmLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockFilmLocalDataSource extends _i1.Mock
-    implements _i5.FilmLocalDataSource {
+    implements _i8.FilmLocalDataSource {
   MockFilmLocalDataSource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<void> cacheFilmList(
+  _i6.Future<void> cacheFilmList(
     String? category,
-    _i6.FilmListModel? filmList,
+    _i2.FilmListModel? filmList,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -142,45 +176,45 @@ class MockFilmLocalDataSource extends _i1.Mock
             filmList,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
-  _i3.Future<_i6.FilmListModel?> getFilmList(String? category) =>
+  _i6.Future<_i2.FilmListModel?> getFilmList(String? category) =>
       (super.noSuchMethod(
         Invocation.method(
           #getFilmList,
           [category],
         ),
-        returnValue: _i3.Future<_i6.FilmListModel?>.value(),
-      ) as _i3.Future<_i6.FilmListModel?>);
+        returnValue: _i6.Future<_i2.FilmListModel?>.value(),
+      ) as _i6.Future<_i2.FilmListModel?>);
 
   @override
-  _i3.Future<void> cacheFilmDetails(_i7.FilmDetailModel? filmDetail) =>
+  _i6.Future<void> cacheFilmDetails(_i3.FilmDetailModel? filmDetail) =>
       (super.noSuchMethod(
         Invocation.method(
           #cacheFilmDetails,
           [filmDetail],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
-  _i3.Future<_i7.FilmDetailModel?> getFilmDetails(int? filmId) =>
+  _i6.Future<_i3.FilmDetailModel?> getFilmDetails(int? filmId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getFilmDetails,
           [filmId],
         ),
-        returnValue: _i3.Future<_i7.FilmDetailModel?>.value(),
-      ) as _i3.Future<_i7.FilmDetailModel?>);
+        returnValue: _i6.Future<_i3.FilmDetailModel?>.value(),
+      ) as _i6.Future<_i3.FilmDetailModel?>);
 
   @override
-  _i3.Future<void> cacheFilmCredits(
+  _i6.Future<void> cacheFilmCredits(
     int? filmId,
-    _i8.FilmCreditsModel? credits,
+    _i4.FilmCreditsModel? credits,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -190,22 +224,22 @@ class MockFilmLocalDataSource extends _i1.Mock
             credits,
           ],
         ),
-        returnValue: _i3.Future<void>.value(),
-        returnValueForMissingStub: _i3.Future<void>.value(),
-      ) as _i3.Future<void>);
+        returnValue: _i6.Future<void>.value(),
+        returnValueForMissingStub: _i6.Future<void>.value(),
+      ) as _i6.Future<void>);
 
   @override
-  _i3.Future<_i8.FilmCreditsModel?> getFilmCredits(int? filmId) =>
+  _i6.Future<_i4.FilmCreditsModel?> getFilmCredits(int? filmId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getFilmCredits,
           [filmId],
         ),
-        returnValue: _i3.Future<_i8.FilmCreditsModel?>.value(),
-      ) as _i3.Future<_i8.FilmCreditsModel?>);
+        returnValue: _i6.Future<_i4.FilmCreditsModel?>.value(),
+      ) as _i6.Future<_i4.FilmCreditsModel?>);
 
   @override
-  _i3.Future<bool> isCacheValid(
+  _i6.Future<bool> isCacheValid(
     String? category,
     Duration? maxAge,
   ) =>
@@ -217,6 +251,110 @@ class MockFilmLocalDataSource extends _i1.Mock
             maxAge,
           ],
         ),
-        returnValue: _i3.Future<bool>.value(false),
-      ) as _i3.Future<bool>);
+        returnValue: _i6.Future<bool>.value(false),
+      ) as _i6.Future<bool>);
+}
+
+/// A class which mocks [FilmRemoteDataSource].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFilmRemoteDataSource extends _i1.Mock
+    implements _i9.FilmRemoteDataSource {
+  MockFilmRemoteDataSource() {
+    _i1.throwOnMissingStub(this);
+  }
+
+  @override
+  _i6.Future<_i2.FilmListModel> getNowPlayingFilms() => (super.noSuchMethod(
+        Invocation.method(
+          #getNowPlayingFilms,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+          this,
+          Invocation.method(
+            #getNowPlayingFilms,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.FilmListModel>);
+
+  @override
+  _i6.Future<_i2.FilmListModel> getPopularFilms() => (super.noSuchMethod(
+        Invocation.method(
+          #getPopularFilms,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+          this,
+          Invocation.method(
+            #getPopularFilms,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.FilmListModel>);
+
+  @override
+  _i6.Future<_i2.FilmListModel> getTopRatedFilms() => (super.noSuchMethod(
+        Invocation.method(
+          #getTopRatedFilms,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+          this,
+          Invocation.method(
+            #getTopRatedFilms,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.FilmListModel>);
+
+  @override
+  _i6.Future<_i2.FilmListModel> getUpcomingFilms() => (super.noSuchMethod(
+        Invocation.method(
+          #getUpcomingFilms,
+          [],
+        ),
+        returnValue: _i6.Future<_i2.FilmListModel>.value(_FakeFilmListModel_1(
+          this,
+          Invocation.method(
+            #getUpcomingFilms,
+            [],
+          ),
+        )),
+      ) as _i6.Future<_i2.FilmListModel>);
+
+  @override
+  _i6.Future<_i3.FilmDetailModel> getFilmDetails(int? filmId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFilmDetails,
+          [filmId],
+        ),
+        returnValue:
+            _i6.Future<_i3.FilmDetailModel>.value(_FakeFilmDetailModel_2(
+          this,
+          Invocation.method(
+            #getFilmDetails,
+            [filmId],
+          ),
+        )),
+      ) as _i6.Future<_i3.FilmDetailModel>);
+
+  @override
+  _i6.Future<_i4.FilmCreditsModel> getFilmCredits(int? filmId) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFilmCredits,
+          [filmId],
+        ),
+        returnValue:
+            _i6.Future<_i4.FilmCreditsModel>.value(_FakeFilmCreditsModel_3(
+          this,
+          Invocation.method(
+            #getFilmCredits,
+            [filmId],
+          ),
+        )),
+      ) as _i6.Future<_i4.FilmCreditsModel>);
 }

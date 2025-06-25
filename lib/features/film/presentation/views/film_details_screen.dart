@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 
-class FilmDetailsScreen extends StatelessWidget {
+class FilmDetailsScreen extends StatefulWidget {
   const FilmDetailsScreen({super.key, required this.filmId});
 
-  final String filmId;
+  final int filmId;
 
+  @override
+  State<FilmDetailsScreen> createState() => _FilmDetailsScreenState();
+}
+
+class _FilmDetailsScreenState extends State<FilmDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

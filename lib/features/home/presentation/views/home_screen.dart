@@ -1,3 +1,4 @@
+import 'package:film_magic/features/film/presentation/views/widgets/films_promo_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
@@ -22,38 +23,58 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
-      body: Consumer<FilmViewModel>(
-        builder: (context, filmViewModel, child) {
-          final isLoading = filmViewModel.isLoading;
-          final errorMessage = filmViewModel.errorMessage;
-          
-          if (errorMessage != null) {
-            return Center(child: Text('Error: $errorMessage'));
-          }
-          
-          return RefreshIndicator(
+    return Consumer<FilmViewModel>(
+      builder: (context, filmViewModel, child) {
+        final isLoading = filmViewModel.isLoading;
+        final errorMessage = filmViewModel.errorMessage;
+
+        if (errorMessage != null) {
+          return Center(child: Text('Error: $errorMessage'));
+        }
+
+        return Scaffold(
+          body: RefreshIndicator(
             onRefresh: () => filmViewModel.loadAllFilms(),
-            child: ListView(
-              children: [
-                if (filmViewModel.nowPlayingFilms != null)
-                  FilmList(
-                    title: 'Now Playing',
-                    films: filmViewModel.nowPlayingFilms!.results,
-                    isLoading: isLoading,
+            child: CustomScrollView(
+              slivers: [
+                const SliverAppBar(
+                  floating: true,
+                  forceElevated: true,
+                  expandedHeight: 300,
+                  elevation: 0,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: FilmsPromoCarousel(),
                   ),
-                if (filmViewModel.popularFilms != null)
-                  FilmList(
-                    title: 'Popular',
-                    films: filmViewModel.popularFilms!.results,
-                    isLoading: isLoading,
+                ),
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      if (filmViewModel.popularFilms != null)
+                        FilmList(
+                          title: 'Popular',
+                          films: filmViewModel.popularFilms!.results,
+                          isLoading: isLoading,
+                        ),
+                      if (filmViewModel.popularFilms != null)
+                        FilmList(
+                          title: 'Upcoming',
+                          films: filmViewModel.upcomingFilms!.results,
+                          isLoading: isLoading,
+                        ),
+                      if (filmViewModel.popularFilms != null)
+                        FilmList(
+                          title: 'Top Rated',
+                          films: filmViewModel.topRatedFilms!.results,
+                          isLoading: isLoading,
+                        ),
+                    ],
                   ),
+                ),
               ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

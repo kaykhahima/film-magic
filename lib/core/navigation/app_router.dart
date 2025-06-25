@@ -88,7 +88,7 @@ class AppRouter {
         path: filmDetailsRoute,
         name: filmDetailsRoute,
         builder: (context, state) {
-          final filmId = state.extra as String?;
+          final filmId = state.extra as int?;
           return FilmDetailsScreen(key: state.pageKey, filmId: filmId!);
         },
       ),

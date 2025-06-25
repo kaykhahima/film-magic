@@ -1,5 +1,7 @@
+import 'package:film_magic/features/film/presentation/views/widgets/film_header.dart';
 import 'package:flutter/material.dart';
 import 'package:film_magic/features/film/data/models/film_list_model.dart';
+import 'package:gap/gap.dart';
 
 import 'film_container.dart';
 
@@ -21,8 +23,8 @@ class FilmList extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
+          padding: const EdgeInsets.only(left: 16.0),
+          child: FilmHeader(title: title),
         ),
         SizedBox(
           height: 200,
@@ -40,6 +42,7 @@ class FilmList extends StatelessWidget {
                   },
                 ),
         ),
+        Gap(12.0),
       ],
     );
   }
