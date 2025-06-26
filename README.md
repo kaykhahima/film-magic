@@ -9,8 +9,10 @@
 5. [Setup Instructions](#setup-instructions)
 6. [API Integration](#api-integration)
 7. [Database Structure](#database-structure)
-8. [Navigation](#navigation)
-9. [Theme Management](#theme-management)
+8. [Caching Mechanism](#caching-mechanism)
+9. [Navigation](#navigation)
+10. [Theme Management](#theme-management)
+11. [Known Issues](#known-issues)
 
 ## Introduction
 
@@ -186,6 +188,21 @@ The app uses SQLite (via `sqflite`) for local data persistence:
 - **actors**: Actor information
 - **actor_details**: Detailed actor information
 
+## Caching Mechanism
+
+### Film Caching
+
+- **On-Demand Caching**: Films list are cached the first time a user loads the home screen and detailed film information are cached when a user views a film's details screen
+- **Persistent Storage**: All film data is stored in the local SQLite database for future access
+- **Offline Access**: Once cached, film details can be accessed without an internet connection
+
+### Image Caching
+
+- **Viewport-Based Caching**: Images are only cached when they appear in the device's viewport
+- **Lazy Loading**: This approach optimizes memory usage and network bandwidth
+- **Cache Management**: The app uses Flutter's `cached_network_image` package to handle image caching
+- **Persistence**: Cached images remain available for offline viewing after initial loading. Consider checking the [Known Issues](#known-issues) section see image loading issues on iOS devices.
+
 ## Navigation
 
 The app uses `go_router` for navigation with a bottom navigation bar for main sections:
@@ -205,7 +222,18 @@ The app supports light, dark, and system default themes:
 
 - Theme preferences are stored in the user profile
 - `flex_color_scheme` is used for consistent theming
-- To customize this specific theme, go to [Film Magic Theme Playground](https://rydmike.com/flexcolorscheme/themesplayground-latest/?config=H4sIAAIAXWgA_71WXW_aMBR976-IeK5QEhilvI2PSGjdigrbpL0gN7kh1hw78gcfq_rfZzuE8tmigZe3cI7Puff4RtyXG08_tYKg1YwzRZNpgiSqdbzaJIMchDfaIJ5BPFgWjEtIvLBV91v10A8_eUHQ8dudRrN2e6A2By4wo0awXQ_rfkVBRdFFfBxzRggk32kCfEBgjqQm9xH_rQ_4Z1Af8CyTW9xnAjR5gDmQPZESMOxH2mOEcaHBFBEBFYFJyfJvaI5nVllbbly2dOIMF13GdQ1PKMHKqDS3sTHEjCaIr8ZAINY5jWOTo7XU3BfLtGxNklO5KsBkA1TlU2Gp09hyb9-Yc0SUZRUc51q6ZqHXHdf_ZaaETmnAOePrgE-ZnBaOorso6Af9k8rVpf6L9CBq6ueY9Kjsp8eoRJjCJfW3Qt__HJ1jckkr7YHvR4N3XFx2YLSfIHVVutNcrLiL4jcf9zWGKIjC-8bdeTaXxBU1ombUetfHbReXjdIZ5TtO58JxOu0wAS6x82k6cHETV2XjtAdXo1Tpu43GwSBhWijZ15PKkWR8bzEJwqOsoYiw2aT2FiCmJNHjkXSVXoToY_nmfKEQMUpTRsrVbCh-ZljCXmGl8FDvfUuNtO6rnzO2GK8h3d7RpU7gXBHTc4_lBaNApah0_H3KDwyLX4zlGmv77QpVPEUxfGUJfDDYNoOUwHK6PjPN9aGjQRCzn-7FUJ6ZYCqv_dcoFljG2SRT-XOEl3pHxH8OEn6jXPPCGR0du3JpjplEPzKwxNMxJuZCdpVZgWN7wQOq-7QOQXAAjqW2WsPVJ6KoWO_QEzabERgKm8HBV6IEfIHV7rDdvP4FtvQvvkYNAAA=)
+- To customize this specific theme, go to [Film Magic Theme Playground](https://rydmike.com/flexcolorscheme/themesplayground-latest/?config=H4sIAAZwXWgA_71XTW_aQBC951dYnCtknJQQbiFgCTVtokBaqRdrscd4lfWutR8EGuW_d3fBFDAflmDrG54382ae34rZjytPP42CoMWUM0WTKEESNbpeY5xBDsJ7Xkc8E_FgXjAuIfGCdtNvNwM_-Oq17rp-u3vtN75Uqs2AC8yoKdhpBs01BCWokHgG90XRQ3wUc0bIK02AP6VpH_E3nfBhkRadIC4juSjA1AGq8qjMjziIglEBq8IWPkNEWShL04Z9_VnSbtBBYgkHBGZI6h5XtH4N6COeZrKKlQsCdZpPCcwjnTNBPBImaW_zQvEUxbB3AJNUNuGKakKAJmacJ_rACONCI1NEBGzGH2EGZEe5ZcB0dyiTScnyH2iGp1ZOPVEPxW9Ly4xiYzybd2o4YaFRbLH156qyrz_s5hRV2Chj7yMgEGv_P6IJkBqDmZxX7c8jWXGGix7j2mAvKMHKhFvBRmwEMaN6-kXJfUmJCo5zXXpboiXr_yJTQos24JzxE4fncOEwvA1b_Vb_YOVTh-VY6UF4o599pZ-X8zwwKhGmcE7_7cD378M6JOeM0hn4fjg4wuJyAlP7BVJXrTvVxRZ30fz6cF_CRK0wuLu-rUdzjlzhdXgTto_yuJ3iPCvVaN-xOmfa6TDDGLjEzt1UYXEjV0njdAZXVirru5XGgZEwLZTsa6dyJBk_tJhso4YixGZN3tlsmJJE2yPpKb0X0aflL-cLhYhRmjJid9ehGHMFPaLXy53eSpRVcCh-ZVhCBWLoh3r1n-tI-658bdbAVUiLsHfFFThXxCijLzhlAX839sByfXcBKsVByE8M778Zy3Ws43fK6HKt_c6S-teNVU6U66S9UhKzye8IucwZYyov_ecq3rGMs3Gm8kmI53rLxH8q6v-DXNIyjD7vM400aUbRUwQWeERGK9R2aVbg2H7hgb7eYEsRVGIjqalW0ZtVVK0vDmM2nRIYCqtB5ZwpAd9gsW3Eq8-_yXqsS9wPAAA=)
 - Theme changes are managed by the `AuthViewModel`
 
-        
+## Known Issues
+
+The following are known issues in the current version of Film Magic:
+
+### Performance Issues
+
+- **Slow Image Loading on iOS Devices**: Images may load slowly on iOS devices when in offline mode
+
+### Workarounds
+
+For slow image loading on iOS:
+- For faster media retrieval, ensure you are online    
