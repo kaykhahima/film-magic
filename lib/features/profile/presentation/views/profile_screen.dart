@@ -1,8 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:film_magic/core/utils/app_helper.dart';
+import 'package:film_magic/features/profile/presentation/views/widgets/profile_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 
+import '../../../../core/theme/widgets/theme_selector_list.dart';
 import '../../../authentication/data/models/user_model.dart';
 import '../../../authentication/presentation/viewmodels/auth_viewmodel.dart';
 
@@ -27,10 +31,9 @@ class ProfileScreen extends StatelessWidget {
       body: user == null
           ? const Center(child: CircularProgressIndicator())
           : ListView(
-              padding: const EdgeInsets.all(16.0),
               children: [
-                // User info section
-                Center(
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
                       CachedNetworkImage(
@@ -62,80 +65,23 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const Gap(32),
                 // Theme selection section
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Appearance',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        const Gap(16),
-                        _buildThemeOption(
-                          context,
-                          title: 'System Default',
-                          subtitle: 'Follow system settings',
-                          icon: Icons.brightness_auto,
-                          isSelected:
-                              authViewModel.themePreference ==
-                              ThemePreference.systemDefault,
-                          onTap: () => authViewModel.updateThemePreference(
-                            ThemePreference.systemDefault,
-                          ),
-                        ),
-                        const Divider(),
-                        _buildThemeOption(
-                          context,
-                          title: 'Light',
-                          subtitle: 'Light theme',
-                          icon: Icons.light_mode,
-                          isSelected:
-                              authViewModel.themePreference ==
-                              ThemePreference.light,
-                          onTap: () => authViewModel.updateThemePreference(
-                            ThemePreference.light,
-                          ),
-                        ),
-                        const Divider(),
-                        _buildThemeOption(
-                          context,
-                          title: 'Dark',
-                          subtitle: 'Dark theme',
-                          icon: Icons.dark_mode,
-                          isSelected:
-                              authViewModel.themePreference ==
-                              ThemePreference.dark,
-                          onTap: () => authViewModel.updateThemePreference(
-                            ThemePreference.dark,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                ProfileTile(
+                  title: 'Appearance',
+                  leadingIcon: Icons.contrast,
+                  value: authViewModel.themePreference.name,
+                  onTap: () => _showThemeSelector(context),
                 ),
               ],
             ),
     );
   }
 
-  Widget _buildThemeOption(
-    BuildContext context, {
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: isSelected
-          ? const Icon(Icons.check, color: Colors.green)
-          : null,
-      onTap: onTap,
+  _showThemeSelector(BuildContext context) {
+    AppHelper.launchBottomsheet(
+      context: context,
+      title: 'Appearance',
+      subtitle: 'Select your preferred appearance',
+      children: [ThemeSelectorList(onThemeSelected: (_) => context.pop())],
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dart_mappable/dart_mappable.dart';
+import 'package:flutter/material.dart';
 
 part 'user_model.mapper.dart';
 
@@ -21,10 +22,16 @@ class UserModel with UserModelMappable {
 
 @MappableEnum()
 enum ThemePreference {
-  systemDefault('System Default'),
-  light('Light'),
-  dark('Dark');
+  systemDefault(
+    'System Default',
+    'Follow system settings',
+    Icons.brightness_auto,
+  ),
+  light('Light', 'Light', Icons.light_mode),
+  dark('Dark', 'Dark', Icons.dark_mode);
 
   final String name;
-  const ThemePreference(this.name);
+  final String description;
+  final IconData icon;
+  const ThemePreference(this.name, this.description, this.icon);
 }
