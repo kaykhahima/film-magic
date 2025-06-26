@@ -19,6 +19,24 @@ class ActorViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   ActorDetailModel? get actorDetails => _actorDetails;
 
+  ActorDetailModel? get dummyActorDetails => ActorDetailModel(
+    adult: false,
+    alsoKnownAs: ["Scarlett Ingrid Johansson"],
+    biography:
+        "Scarlett Ingrid Johansson (born November 22, 1984) is an American actress. The world's highest-paid actress in 2018 and 2019, she has featured multiple times on the Forbes Celebrity 100 list.",
+    birthday: "1984-11-22",
+    deathday: null,
+    gender: 1,
+    homepage: null,
+    id: 1245,
+    imdbId: "nm0424060",
+    knownForDepartment: "Acting",
+    name: "Scarlett Johansson",
+    placeOfBirth: "New York City, New York, USA",
+    popularity: 24.1544,
+    profilePath: "/8m21eocprLYuW0ywveIgThk6VM.jpg",
+  );
+
   // Load actor details
   Future<void> loadActorDetails(int actorId) async {
     _setLoading(true);

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:film_magic/features/actor/presentation/viewmodels/actor_viewmodel.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../film/data/models/film_credits_model.dart';
 
@@ -59,12 +60,6 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                     return FutureBuilder(
                       future: _loadActorDetailsFuture,
                       builder: (context, snapshot) {
-                        if (viewModel.isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-
                         if (viewModel.errorMessage != null) {
                           return Center(
                             child: Column(
@@ -90,20 +85,20 @@ class _ActorDetailsScreenState extends State<ActorDetailsScreen> {
                           );
                         }
 
-                        final actorDetails = viewModel.actorDetails;
-                        if (actorDetails == null) {
-                          return const Center(
-                            child: Text('No actor details available'),
-                          );
-                        }
+                        final actorDetails = viewModel.isLoading
+                            ? viewModel.dummyActorDetails
+                            : viewModel.actorDetails;
 
-                        return Column(
-                          spacing: 16.0,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ActorDetailOverview(actor: actorDetails),
-                            ActorDetailsFacts(actor: actorDetails),
-                          ],
+                        return Skeletonizer(
+                          enabled: viewModel.isLoading,
+                          child: Column(
+                            spacing: 16.0,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ActorDetailOverview(actor: actorDetails!),
+                              ActorDetailsFacts(actor: actorDetails),
+                            ],
+                          ),
                         );
                       },
                     );
