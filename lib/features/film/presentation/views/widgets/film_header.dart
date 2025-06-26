@@ -19,6 +19,7 @@ class FilmHeader extends StatelessWidget {
                 icon ??
                 Icon(
                   Icons.arrow_forward_ios,
+                  size: 20,
                   color: Theme.of(context).colorScheme.onSurface,
                 ),
             onPressed: onTap,

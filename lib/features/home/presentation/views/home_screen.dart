@@ -39,9 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               slivers: [
                 SliverAppBar(
                   expandedHeight: MediaQuery.sizeOf(context).height * 0.35,
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: FilmsPromoCarousel(),
-                  ),
+                  flexibleSpace: FilmsPromoCarousel(),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -49,17 +47,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       children: [
                         FilmList(
-                          title: 'Popular Films',
+                          title: filmViewModel.categoryOptions[1],
                           films: filmViewModel.popularFilms,
                           isLoading: isLoading,
                         ),
                         FilmList(
-                          title: 'New & Upcoming',
+                          title: filmViewModel.categoryOptions[3],
                           films: filmViewModel.upcomingFilms,
                           isLoading: isLoading,
                         ),
                         FilmList(
-                          title: 'Top Rated Films',
+                          title: filmViewModel.categoryOptions[0],
                           films: filmViewModel.topRatedFilms,
                           isLoading: isLoading,
                         ),

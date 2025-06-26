@@ -14,13 +14,8 @@ class FilmsPromoCarousel extends StatelessWidget {
     final filmViewModel = context.watch<FilmViewModel>();
     List<FilmModel>? carouselFilms = filmViewModel.upcomingFilms?.results;
     if (carouselFilms == null || carouselFilms.isEmpty) {
-      return const Center(child: Text('No films available'));
+      return const SizedBox.shrink();
     }
-
-    // //limit the number of films to 5
-    // if (carouselFilms.length > 5) {
-    //   carouselFilms = carouselFilms.sublist(10, 15);
-    // }
 
     return ExpandableCarousel(
       options: ExpandableCarouselOptions(

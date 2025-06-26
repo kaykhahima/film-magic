@@ -58,7 +58,7 @@ class FilmPromoCard extends StatelessWidget {
           ),
         ),
         Positioned(
-          bottom: 20,
+          bottom: 30,
           child: SizedBox(
             height: height,
             width: MediaQuery.of(context).size.width,

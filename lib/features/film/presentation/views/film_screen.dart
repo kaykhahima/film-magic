@@ -117,14 +117,18 @@ class _FilmScreenState extends State<FilmScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _searchController.clear();
-          filmViewModel.clearFilters();
-          FocusScope.of(context).unfocus();
-        },
-        child: const Icon(Icons.clear_all),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: filmViewModel.hasFilters
+          ? FilledButton.icon(
+              onPressed: () {
+                _searchController.clear();
+                filmViewModel.clearFilters();
+                FocusScope.of(context).unfocus();
+              },
+              icon: const Icon(Icons.clear_all),
+              label: const Text('Clear'),
+            )
+          : null,
     );
   }
 }

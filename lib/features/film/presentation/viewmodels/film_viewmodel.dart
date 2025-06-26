@@ -53,6 +53,10 @@ class FilmViewModel extends ChangeNotifier {
   String get searchQuery => _searchQuery;
   String get selectedCategory => _selectedCategory;
   List<int> get selectedGenreIds => _selectedGenreIds;
+  bool get hasFilters =>
+      _searchQuery.isNotEmpty ||
+      _selectedCategory != 'Top Rated' ||
+      _selectedGenreIds.isNotEmpty;
 
   DisplayViewModel get selectedView =>
       displayViews.firstWhere((v) => v.isSelected);
@@ -97,11 +101,13 @@ class FilmViewModel extends ChangeNotifier {
     // Apply search and genre filters
     return baseFilms.results.where((film) {
       // Filter by search query
-      final matchesSearch = _searchQuery.isEmpty ||
+      final matchesSearch =
+          _searchQuery.isEmpty ||
           film.title.toLowerCase().contains(_searchQuery.toLowerCase());
 
       // Filter by selected genres
-      final matchesGenres = _selectedGenreIds.isEmpty ||
+      final matchesGenres =
+          _selectedGenreIds.isEmpty ||
           _selectedGenreIds.every((genreId) => film.genreIds.contains(genreId));
 
       return matchesSearch && matchesGenres;
