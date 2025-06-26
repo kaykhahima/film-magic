@@ -1,7 +1,12 @@
+import 'package:film_magic/features/film/presentation/views/widgets/film_category_switcher.dart';
+import 'package:film_magic/features/film/presentation/views/widgets/film_horizontal_genre_chips.dart';
+import 'package:film_magic/features/film/presentation/views/widgets/films_grid_view.dart';
+import 'package:film_magic/features/film/presentation/views/widgets/films_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
-import 'package:film_magic/features/film/presentation/views/widgets/film_list.dart';
+
+import '../../../../shared/widgets/input_fields.dart';
 
 class FilmScreen extends StatefulWidget {
   const FilmScreen({super.key});
@@ -11,6 +16,8 @@ class FilmScreen extends StatefulWidget {
 }
 
 class _FilmScreenState extends State<FilmScreen> {
+  final TextEditingController _searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -21,50 +28,102 @@ class _FilmScreenState extends State<FilmScreen> {
   }
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final filmViewModel = context.watch<FilmViewModel>();
+
+    final isLoading = filmViewModel.isLoading;
+    final errorMessage = filmViewModel.errorMessage;
+
+    if (errorMessage != null) {
+      return Center(child: Text('Error: $errorMessage'));
+    }
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Films')),
-      body: Consumer<FilmViewModel>(
-        builder: (context, filmViewModel, child) {
-          final isLoading = filmViewModel.isLoading;
-          final errorMessage = filmViewModel.errorMessage;
-
-          if (errorMessage != null) {
-            return Center(child: Text('Error: $errorMessage'));
-          }
-
-          return RefreshIndicator(
-            onRefresh: () => filmViewModel.loadAllFilms(),
-            child: ListView(
-              children: [
-                if (filmViewModel.nowPlayingFilms != null)
-                  FilmList(
-                    title: 'Currently Playing',
-                    films: filmViewModel.nowPlayingFilms!.results,
-                    isLoading: isLoading,
+      appBar: AppBar(title: const Text('Explore'), centerTitle: false),
+      body: RefreshIndicator(
+        onRefresh: () => filmViewModel.loadAllFilms(),
+        child: Column(
+          children: [
+            // Filter section
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InputField(
+                    controller: _searchController,
+                    hintText: 'Search films...',
+                    suffixIcon: _searchController.text.isEmpty
+                        ? const Icon(Icons.search)
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              _searchController.clear();
+                              filmViewModel.setSearchQuery('');
+                              FocusScope.of(context).unfocus();
+                            },
+                          ),
+                    onChanged: (value) {
+                      filmViewModel.setSearchQuery(value);
+                    },
                   ),
-                if (filmViewModel.popularFilms != null)
-                  FilmList(
-                    title: 'Popular Films',
-                    films: filmViewModel.popularFilms!.results,
-                    isLoading: isLoading,
+                  FilmCategorySwitcher(),
+                  FilmHorizontalGenreChips(),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            '${filmViewModel.filteredFilms.length} films',
+                          ),
+                        ),
+                        Row(
+                          children: filmViewModel.displayViews.map((view) {
+                            return IconButton(
+                              onPressed: () =>
+                                  filmViewModel.setSelectedView(view),
+                              icon: Icon(
+                                view.isSelected ? view.selectedIcon : view.icon,
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
-                if (filmViewModel.topRatedFilms != null)
-                  FilmList(
-                    title: 'Top Rated',
-                    films: filmViewModel.topRatedFilms!.results,
-                    isLoading: isLoading,
-                  ),
-                if (filmViewModel.upcomingFilms != null)
-                  FilmList(
-                    title: 'New & Upcoming',
-                    films: filmViewModel.upcomingFilms!.results,
-                    isLoading: isLoading,
-                  ),
-              ],
+                ],
+              ),
             ),
-          );
+
+            // Results section
+            Expanded(
+              child: isLoading && filmViewModel.filteredFilms.isEmpty
+                  ? const Center(child: CircularProgressIndicator())
+                  : filmViewModel.filteredFilms.isEmpty
+                  ? const Center(child: Text('No films match your filters'))
+                  : filmViewModel.selectedView.name == 'List'
+                  ? FilmsListView(films: filmViewModel.filteredFilms)
+                  : FilmsGridView(films: filmViewModel.filteredFilms),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _searchController.clear();
+          filmViewModel.clearFilters();
+          FocusScope.of(context).unfocus();
         },
+        child: const Icon(Icons.clear_all),
       ),
     );
   }

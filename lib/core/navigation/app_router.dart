@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 
 import '../../features/authentication/presentation/viewmodels/auth_viewmodel.dart';
 import '../../features/authentication/presentation/views/registration_screen.dart';
+import '../../features/film/data/models/film_credits_model.dart';
+import '../../features/film/data/models/film_list_model.dart';
 import '../../shared/widgets/main_wrapper.dart';
 
 class AppRouter {
@@ -78,18 +80,28 @@ class AppRouter {
         parentNavigatorKey: NavKeys.rootNavKey,
         path: actorDetailsRoute,
         name: actorDetailsRoute,
-        builder: (context, state) {
-          final actorId = state.extra as int?;
-          return ActorDetailsScreen(key: state.pageKey, actorId: actorId!);
+        pageBuilder: (context, state) {
+          final actor = state.extra as FilmCastModel?;
+
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: ActorDetailsScreen(key: state.pageKey, actor: actor!),
+            transitionsBuilder: _fadeCurveTransition,
+          );
         },
       ),
       GoRoute(
         parentNavigatorKey: NavKeys.rootNavKey,
         path: filmDetailsRoute,
         name: filmDetailsRoute,
-        builder: (context, state) {
-          final filmId = state.extra as int?;
-          return FilmDetailsScreen(key: state.pageKey, filmId: filmId!);
+        pageBuilder: (context, state) {
+          final film = state.extra as FilmModel?;
+
+          return CustomTransitionPage(
+            key: state.pageKey,
+            child: FilmDetailsScreen(key: state.pageKey, film: film!),
+            transitionsBuilder: _fadeCurveTransition,
+          );
         },
       ),
     ],
@@ -128,4 +140,17 @@ class AppRouter {
       );
     },
   );
+}
+
+Widget _fadeCurveTransition(
+  BuildContext context,
+  Animation<double> animation,
+  Animation<double> secondaryAnimation,
+  Widget child,
+) {
+  final curvedAnimation = CurvedAnimation(
+    parent: animation,
+    curve: Interval(0, 0.5, curve: Curves.easeInOutExpo),
+  );
+  return FadeTransition(opacity: curvedAnimation, child: child);
 }

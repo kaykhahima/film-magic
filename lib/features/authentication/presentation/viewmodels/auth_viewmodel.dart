@@ -92,7 +92,8 @@ class AuthViewModel extends ChangeNotifier {
       _status = AuthStatus.authenticated;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = e.toString();
+      _errorMessage = 'Failed to sign in';
+      print(e.toString());
     } finally {
       notifyListeners();
     }
@@ -102,7 +103,7 @@ class AuthViewModel extends ChangeNotifier {
     try {
       _status = AuthStatus.loading;
       notifyListeners();
-      
+
       await _authRepository.signOut();
       _status = AuthStatus.unauthenticated;
       _user = null;

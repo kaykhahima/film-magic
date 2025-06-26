@@ -24,7 +24,7 @@ class FilmPromoCard extends StatelessWidget {
             imageUrl: AppHelper.buildImageUrl(film.posterPath!),
             imageBuilder: (context, imageProvider) {
               return Hero(
-                tag: film.id,
+                tag: film.title,
                 child: Image(
                   image: imageProvider,
                   height: height,
@@ -88,10 +88,8 @@ class FilmPromoCard extends StatelessWidget {
                     ),
                   ),
                   IconButton.filled(
-                    onPressed: () => context.push(
-                      AppRouter.filmDetailsRoute,
-                      extra: film.id,
-                    ),
+                    onPressed: () =>
+                        context.push(AppRouter.filmDetailsRoute, extra: film),
                     icon: Icon(Icons.arrow_outward),
                   ),
                 ],

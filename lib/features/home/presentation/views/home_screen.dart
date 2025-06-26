@@ -37,33 +37,32 @@ class _HomeScreenState extends State<HomeScreen> {
             onRefresh: () => filmViewModel.loadAllFilms(),
             child: CustomScrollView(
               slivers: [
-                const SliverAppBar(
-                  expandedHeight: 300,
-                  flexibleSpace: FilmsPromoCarousel(),
+                SliverAppBar(
+                  expandedHeight: MediaQuery.sizeOf(context).height * 0.35,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: FilmsPromoCarousel(),
+                  ),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Column(
                       children: [
-                        if (filmViewModel.popularFilms != null)
-                          FilmList(
-                            title: 'Popular Films',
-                            films: filmViewModel.popularFilms!.results,
-                            isLoading: isLoading,
-                          ),
-                        if (filmViewModel.popularFilms != null)
-                          FilmList(
-                            title: 'New & Upcoming',
-                            films: filmViewModel.upcomingFilms!.results,
-                            isLoading: isLoading,
-                          ),
-                        if (filmViewModel.popularFilms != null)
-                          FilmList(
-                            title: 'Top Rated Films',
-                            films: filmViewModel.topRatedFilms!.results,
-                            isLoading: isLoading,
-                          ),
+                        FilmList(
+                          title: 'Popular Films',
+                          films: filmViewModel.popularFilms,
+                          isLoading: isLoading,
+                        ),
+                        FilmList(
+                          title: 'New & Upcoming',
+                          films: filmViewModel.upcomingFilms,
+                          isLoading: isLoading,
+                        ),
+                        FilmList(
+                          title: 'Top Rated Films',
+                          films: filmViewModel.topRatedFilms,
+                          isLoading: isLoading,
+                        ),
                       ],
                     ),
                   ),

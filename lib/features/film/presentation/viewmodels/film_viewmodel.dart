@@ -3,6 +3,8 @@ import 'package:film_magic/features/film/data/models/film_list_model.dart';
 import 'package:film_magic/features/film/data/models/genre_list_model.dart';
 import 'package:film_magic/features/film/data/repositories/film_repository.dart';
 
+import '../../../../shared/models/display_view_model.dart';
+
 class FilmViewModel extends ChangeNotifier {
   final FilmRepository _filmRepository;
 
@@ -22,6 +24,19 @@ class FilmViewModel extends ChangeNotifier {
   GenreListModel? _genres;
   String? _genresErrorMessage;
 
+  // Filter state
+  String _searchQuery = '';
+  String _selectedCategory = 'Top Rated'; // Default category
+  List<int> _selectedGenreIds = [];
+
+  // Filter options
+  final List<String> categoryOptions = [
+    'Top Rated',
+    'Popular',
+    'Currently Playing',
+    'New & Upcoming',
+  ];
+
   // Getters
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
@@ -33,6 +48,92 @@ class FilmViewModel extends ChangeNotifier {
   // Genre getters
   GenreListModel? get genres => _genres;
   String? get genresErrorMessage => _genresErrorMessage;
+
+  // Filter getters
+  String get searchQuery => _searchQuery;
+  String get selectedCategory => _selectedCategory;
+  List<int> get selectedGenreIds => _selectedGenreIds;
+
+  DisplayViewModel get selectedView =>
+      displayViews.firstWhere((v) => v.isSelected);
+
+  List<DisplayViewModel> displayViews = [
+    DisplayViewModel(
+      name: 'List',
+      icon: Icons.view_agenda_outlined,
+      selectedIcon: Icons.view_agenda,
+      isSelected: true,
+    ),
+    DisplayViewModel(
+      name: 'Grid',
+      icon: Icons.grid_view_outlined,
+      selectedIcon: Icons.grid_view_rounded,
+    ),
+  ];
+
+  // Get filtered films based on current filters
+  List<FilmModel> get filteredFilms {
+    // Start with the appropriate category of films
+    FilmListModel? baseFilms;
+    switch (_selectedCategory) {
+      case 'Top Rated':
+        baseFilms = _topRatedFilms;
+        break;
+      case 'Popular':
+        baseFilms = _popularFilms;
+        break;
+      case 'Currently Playing':
+        baseFilms = _nowPlayingFilms;
+        break;
+      case 'New & Upcoming':
+        baseFilms = _upcomingFilms;
+        break;
+      default:
+        baseFilms = _topRatedFilms;
+    }
+
+    if (baseFilms == null) return [];
+
+    // Apply search and genre filters
+    return baseFilms.results.where((film) {
+      // Filter by search query
+      final matchesSearch = _searchQuery.isEmpty ||
+          film.title.toLowerCase().contains(_searchQuery.toLowerCase());
+
+      // Filter by selected genres
+      final matchesGenres = _selectedGenreIds.isEmpty ||
+          _selectedGenreIds.every((genreId) => film.genreIds.contains(genreId));
+
+      return matchesSearch && matchesGenres;
+    }).toList();
+  }
+
+  // Filter setters
+  void setSearchQuery(String query) {
+    _searchQuery = query;
+    notifyListeners();
+  }
+
+  void setSelectedCategory(String category) {
+    _selectedCategory = category;
+    notifyListeners();
+  }
+
+  void toggleGenreSelection(int genreId) {
+    if (_selectedGenreIds.contains(genreId)) {
+      _selectedGenreIds.remove(genreId);
+    } else {
+      _selectedGenreIds.add(genreId);
+    }
+    notifyListeners();
+  }
+
+  void clearFilters() {
+    _searchQuery = '';
+    _selectedCategory = 'Top Rated';
+    _selectedGenreIds = [];
+    notifyListeners();
+  }
 
   // Load all film categories
   Future<void> loadAllFilms() async {
@@ -154,6 +255,14 @@ class FilmViewModel extends ChangeNotifier {
 
   void _clearError() {
     _errorMessage = null;
+    notifyListeners();
+  }
+
+  void setSelectedView(DisplayViewModel view) {
+    for (var v in displayViews) {
+      v.isSelected = false;
+    }
+    view.isSelected = true;
     notifyListeners();
   }
 }

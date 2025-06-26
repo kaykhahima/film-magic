@@ -1,14 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:film_magic/features/film/data/models/film_detail_model.dart';
+import 'package:film_magic/features/film/presentation/viewmodels/film_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../../core/utils/app_helper.dart';
+import '../../../data/models/film_list_model.dart';
 import 'film_detail_mini_pill.dart';
 
 class FilmDetailCover extends StatelessWidget {
-  const FilmDetailCover({super.key, required this.filmDetail});
+  const FilmDetailCover({super.key, required this.film});
 
-  final FilmDetailModel filmDetail;
+  final FilmModel film;
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +20,10 @@ class FilmDetailCover extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width,
           child: CachedNetworkImage(
-            imageUrl: AppHelper.buildImageUrl(filmDetail.posterPath!),
+            imageUrl: AppHelper.buildImageUrl(film.posterPath ?? ''),
             imageBuilder: (context, imageProvider) {
               return Hero(
-                tag: filmDetail.id,
+                tag: film.id,
                 child: Image(
                   image: imageProvider,
                   height: height,
@@ -67,28 +69,27 @@ class FilmDetailCover extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FilmDetailMiniPill(
-                    voteAverage: filmDetail.voteAverage,
-                    year: DateTime.parse(filmDetail.releaseDate).year,
-                    adult: filmDetail.adult,
+                    voteAverage: film.voteAverage,
+                    year: DateTime.parse(film.releaseDate).year,
+                    adult: film.adult,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: Text(
-                          filmDetail.genres.map((g) => g.name).join(' · '),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
-                        ),
+                      Consumer<FilmViewModel>(
+                        builder: (context, viewModel, _) {
+                          final genres = viewModel.getGenresByIds(
+                            film.genreIds,
+                          );
+                          return Expanded(
+                            child: Text(
+                              genres.map((g) => g.name).join(' · '),
+                              style: Theme.of(context).textTheme.bodyMedium
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                          );
+                        },
                       ),
-                      if (filmDetail.runtime > 0)
-                        Text(
-                          '${filmDetail.runtime} min',
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(color: Colors.white),
-                        ),
                     ],
                   ),
                 ],

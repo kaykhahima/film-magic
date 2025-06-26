@@ -20,6 +20,7 @@ class FilmDetailAdditionalInfo extends StatelessWidget {
           ),
           const Gap(16),
           _buildInfoRow('Status', film.status),
+          _buildInfoRow('Run time', '${film.runtime} min'),
           _buildInfoRow(
             'Original Language',
             film.originalLanguage.toUpperCase(),

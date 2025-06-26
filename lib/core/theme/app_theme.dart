@@ -33,6 +33,8 @@ abstract final class AppTheme {
     ),
     // Surface color adjustments.
     surfaceTint: const Color(0xFF8E00FE),
+    // Convenience direct styling properties.
+    appBarStyle: FlexAppBarStyle.surface,
     // Component theme configurations for light mode.
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,
@@ -44,10 +46,13 @@ abstract final class AppTheme {
       inputDecoratorRadius: 12.0,
       chipSelectedSchemeColor: SchemeColor.primary,
       chipSecondarySelectedSchemeColor: SchemeColor.primary,
-      chipRadius: 40.0,
+      chipRadius: 12.0,
       alignedDropdown: true,
       appBarScrolledUnderElevation: 0.0,
+      bottomNavigationBarBackgroundSchemeColor: SchemeColor.surface,
       bottomNavigationBarElevation: 0.0,
+      bottomNavigationBarShowSelectedLabels: false,
+      bottomNavigationBarShowUnselectedLabels: false,
       navigationRailUseIndicator: true,
     ),
     // Direct ThemeData properties.
@@ -72,11 +77,12 @@ abstract final class AppTheme {
       error: Color(0xFF7F1D1D),
       errorContainer: Color(0xFF93000A),
     ),
+    // Convenience direct styling properties.
+    appBarStyle: FlexAppBarStyle.surface,
     // Component theme configurations for dark mode.
     subThemesData: const FlexSubThemesData(
       interactionEffects: true,
       tintedDisabledControls: true,
-      blendOnColors: true,
       useM2StyleDividerInM3: true,
       outlinedButtonOutlineSchemeColor: SchemeColor.primary,
       switchThumbSchemeColor: SchemeColor.onPrimary,
@@ -84,10 +90,13 @@ abstract final class AppTheme {
       inputDecoratorRadius: 12.0,
       chipSelectedSchemeColor: SchemeColor.primary,
       chipSecondarySelectedSchemeColor: SchemeColor.primary,
-      chipRadius: 40.0,
+      chipRadius: 12.0,
       alignedDropdown: true,
       appBarScrolledUnderElevation: 0.0,
+      bottomNavigationBarBackgroundSchemeColor: SchemeColor.surface,
       bottomNavigationBarElevation: 0.0,
+      bottomNavigationBarShowSelectedLabels: false,
+      bottomNavigationBarShowUnselectedLabels: false,
       navigationRailUseIndicator: true,
     ),
     // Direct ThemeData properties.

@@ -7,7 +7,7 @@ import 'film_container.dart';
 
 class FilmList extends StatelessWidget {
   final String title;
-  final List<FilmModel> films;
+  final FilmListModel? films;
   final bool isLoading;
 
   const FilmList({
@@ -19,6 +19,10 @@ class FilmList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (films == null) {
+      return SizedBox.shrink();
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,10 +37,10 @@ class FilmList extends StatelessWidget {
               ? const Center(child: CircularProgressIndicator())
               : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: films.length,
+                  itemCount: films!.results.length,
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   itemBuilder: (context, index) {
-                    final film = films[index];
+                    final film = films!.results[index];
                     return Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: FilmContainer(film: film),

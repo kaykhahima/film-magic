@@ -1,13 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:film_magic/features/actor/data/models/actor_detail_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../core/utils/app_helper.dart';
+import '../../../../film/data/models/film_credits_model.dart';
 
 class ActorDetailCover extends StatelessWidget {
   const ActorDetailCover({super.key, required this.actor});
 
-  final ActorDetailModel actor;
+  final FilmCastModel actor;
 
   @override
   Widget build(BuildContext context) {

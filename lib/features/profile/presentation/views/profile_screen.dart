@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 
 import '../../../../core/theme/widgets/theme_selector_list.dart';
-import '../../../authentication/data/models/user_model.dart';
 import '../../../authentication/presentation/viewmodels/auth_viewmodel.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -21,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        centerTitle: false,
         actions: [
           TextButton(
             onPressed: () => authViewModel.signOut(),

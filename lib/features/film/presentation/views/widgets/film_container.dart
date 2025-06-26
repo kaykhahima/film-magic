@@ -21,7 +21,7 @@ class FilmContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(AppRouter.filmDetailsRoute, extra: film.id),
+      onTap: () => context.push(AppRouter.filmDetailsRoute, extra: film),
       child: Container(
         height: height,
         width: width,
@@ -36,11 +36,14 @@ class FilmContainer extends StatelessWidget {
               CachedNetworkImage(
                 imageUrl: AppHelper.buildImageUrl(film.posterPath ?? ''),
                 imageBuilder: (context, imageProvider) {
-                  return Image(
-                    image: imageProvider,
-                    height: height,
-                    width: width,
-                    fit: BoxFit.cover,
+                  return Hero(
+                    tag: film.id,
+                    child: Image(
+                      image: imageProvider,
+                      height: double.infinity,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 },
                 placeholder: (context, url) => SizedBox(),
@@ -48,26 +51,30 @@ class FilmContainer extends StatelessWidget {
               ),
               Positioned(
                 bottom: 0,
-                child: Container(
-                  height: 35,
-                  width: width,
-                  padding: EdgeInsets.symmetric(horizontal: 6.0),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withValues(alpha: 0.7),
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(12.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: width,
+                      height: 35,
+                      padding: EdgeInsets.symmetric(horizontal: 6.0),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withValues(alpha: 0.7),
+                        borderRadius: BorderRadius.vertical(
+                          bottom: Radius.circular(12.0),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          film.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(
+                            context,
+                          ).textTheme.titleSmall?.copyWith(color: Colors.white),
+                        ),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      film.title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(
-                        context,
-                      ).textTheme.titleSmall?.copyWith(color: Colors.white),
-                    ),
-                  ),
+                  ],
                 ),
               ),
             ],

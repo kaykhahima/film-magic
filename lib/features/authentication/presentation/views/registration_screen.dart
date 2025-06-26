@@ -70,6 +70,7 @@ class RegistrationScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ),
+                Gap(12.0),
               ],
             ),
           ),

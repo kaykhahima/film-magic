@@ -38,7 +38,7 @@ class FilmCastList extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 12.0),
                   child: GestureDetector(
                     onTap: () {
-                      context.push(AppRouter.actorDetailsRoute, extra: cast.id);
+                      context.push(AppRouter.actorDetailsRoute, extra: cast);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,9 +48,12 @@ class FilmCastList extends StatelessWidget {
                             cast.profilePath ?? '',
                           ),
                           imageBuilder: (context, imageProvider) {
-                            return CircleAvatar(
-                              radius: 40,
-                              backgroundImage: imageProvider,
+                            return Hero(
+                              tag: cast.id,
+                              child: CircleAvatar(
+                                radius: 40,
+                                backgroundImage: imageProvider,
+                              ),
                             );
                           },
                           placeholder: (context, url) => CircleAvatar(
