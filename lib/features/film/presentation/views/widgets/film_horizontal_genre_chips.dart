@@ -9,6 +9,11 @@ class FilmHorizontalGenreChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filmViewModel = context.watch<FilmViewModel>();
+
+    if (filmViewModel.genres == null) {
+      return SizedBox.shrink();
+    }
+
     final genres = filmViewModel.genres!.genres;
     return Container(
       height: 50,

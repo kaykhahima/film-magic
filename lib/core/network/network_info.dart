@@ -1,12 +1,7 @@
-import 'dart:io';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 class NetworkInfo {
   Future<bool> get isConnected async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
-    } catch (_) {
-      return false;
-    }
+    return await InternetConnection().hasInternetAccess;
   }
 }

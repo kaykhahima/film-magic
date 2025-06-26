@@ -23,14 +23,11 @@ class FilmPromoCard extends StatelessWidget {
           child: CachedNetworkImage(
             imageUrl: AppHelper.buildImageUrl(film.posterPath!),
             imageBuilder: (context, imageProvider) {
-              return Hero(
-                tag: film.title,
-                child: Image(
-                  image: imageProvider,
-                  height: height,
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter,
-                ),
+              return Image(
+                image: imageProvider,
+                height: height,
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter,
               );
             },
             placeholder: (context, url) => SizedBox(),

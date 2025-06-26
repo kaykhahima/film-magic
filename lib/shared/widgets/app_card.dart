@@ -22,7 +22,7 @@ class AppCard extends StatelessWidget {
         side: BorderSide(
           color:
               borderColor ??
-              Theme.of(context).colorScheme.surfaceTint.withOpacity(0.1),
+              Theme.of(context).colorScheme.surfaceTint.withValues(alpha: 0.1),
         ),
         borderRadius: BorderRadius.circular(8.0),
       ),

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:film_magic/features/film/presentation/viewmodels/film_detail_viewmodel.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../data/models/film_list_model.dart';
 
@@ -63,12 +64,6 @@ class _FilmDetailsScreenState extends State<FilmDetailsScreen> {
                     return FutureBuilder(
                       future: _loadFilmDetailsFuture,
                       builder: (context, snapshot) {
-                        if (viewModel.isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-
                         if (viewModel.errorMessage != null) {
                           return Center(
                             child: Column(
@@ -94,27 +89,26 @@ class _FilmDetailsScreenState extends State<FilmDetailsScreen> {
                           );
                         }
 
-                        if (viewModel.filmDetails == null) {
-                          return const Center(
-                            child: Text('Film details not found.'),
-                          );
-                        }
+                        final film = viewModel.isLoading
+                            ? viewModel.dummyFilmDetails
+                            : viewModel.filmDetails!;
 
-                        final film = viewModel.filmDetails!;
-
-                        return Column(
-                          spacing: 16.0,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            FilmDetailOverview(film: film),
-                            FilmCastList(filmCredits: viewModel.filmCredits),
-                            FilmDetailAdditionalInfo(film: film),
-                            FilmList(
-                              title: 'More Like This',
-                              films: viewModel.similarFilms,
-                              isLoading: viewModel.isLoading,
-                            ),
-                          ],
+                        return Skeletonizer(
+                          enabled: viewModel.isLoading,
+                          child: Column(
+                            spacing: 16.0,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FilmDetailOverview(film: film),
+                              FilmCastList(filmCredits: viewModel.filmCredits),
+                              FilmDetailAdditionalInfo(film: film),
+                              FilmList(
+                                title: 'More Like This',
+                                films: viewModel.similarFilms,
+                                isLoading: viewModel.isLoading,
+                              ),
+                            ],
+                          ),
                         );
                       },
                     );

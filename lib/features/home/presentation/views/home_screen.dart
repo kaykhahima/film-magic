@@ -52,6 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           isLoading: isLoading,
                         ),
                         FilmList(
+                          title: filmViewModel.categoryOptions[2],
+                          films: filmViewModel.nowPlayingFilms,
+                          isLoading: isLoading,
+                        ),
+                        FilmList(
                           title: filmViewModel.categoryOptions[3],
                           films: filmViewModel.upcomingFilms,
                           isLoading: isLoading,

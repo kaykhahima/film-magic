@@ -75,7 +75,7 @@ class _InputFieldState extends State<InputField> {
               borderSide: BorderSide(
                 color: Theme.of(
                   context,
-                ).colorScheme.surfaceTint.withOpacity(0.1),
+                ).colorScheme.surfaceTint.withValues(alpha: 0.1),
               ),
             ),
           ),

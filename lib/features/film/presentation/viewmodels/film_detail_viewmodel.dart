@@ -29,6 +29,51 @@ class FilmDetailViewModel extends ChangeNotifier {
   FilmListModel? get similarFilms => _similarFilms;
   FilmListModel? get recommendedFilms => _recommendedFilms;
 
+  FilmDetailModel get dummyFilmDetails => FilmDetailModel(
+    adult: false,
+    backdropPath: '/path/to/backdrop.jpg',
+    belongsToCollection: FilmCollection(
+      id: 123,
+      name: 'Collection Name',
+      posterPath: '/path/to/poster.jpg',
+      backdropPath: '/path/to/backdrop.jpg',
+    ),
+    budget: 200000000,
+    genres: [FilmGenre(id: 28, name: 'Action')],
+    homepage: 'https://example.com',
+    id: 123,
+    imdbId: 'tt1234567',
+    originCountry: ['US'],
+    originalLanguage: 'en',
+    originalTitle: 'Original Title',
+    overview: 'Movie overview text',
+    popularity: 8.5,
+    posterPath: '/path/to/poster.jpg',
+    productionCompanies: [
+      ProductionCompany(
+        id: 456,
+        logoPath: '/path/to/logo.png',
+        name: 'Production Company',
+        originCountry: 'US',
+      ),
+    ],
+    productionCountries: [
+      ProductionCountry(iso31661: 'US', name: 'United States'),
+    ],
+    releaseDate: '2023-05-15',
+    revenue: 500000000,
+    runtime: 120,
+    spokenLanguages: [
+      SpokenLanguage(englishName: 'English', iso6391: 'en', name: 'English'),
+    ],
+    status: 'Released',
+    tagline: 'Movie tagline',
+    title: 'Movie Title',
+    video: false,
+    voteAverage: 7.8,
+    voteCount: 1500,
+  );
+
   // Load film details
   Future<void> loadFilmDetails(int filmId) async {
     _setLoading(true);

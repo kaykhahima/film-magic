@@ -19,11 +19,11 @@ class AuthRepositoryImpl implements AuthRepository {
     GoogleSignIn? googleSignIn,
     required AuthLocalDataSource localDataSource,
     required NetworkInfo networkInfo,
-  }) : 
-    _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
-    _googleSignIn = googleSignIn ?? GoogleSignIn(scopes: ['email', 'profile']),
-    _localDataSource = localDataSource,
-    _networkInfo = networkInfo {
+  }) : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+       _googleSignIn =
+           googleSignIn ?? GoogleSignIn(scopes: ['email', 'profile']),
+       _localDataSource = localDataSource,
+       _networkInfo = networkInfo {
     // Listen to Firebase auth state changes and update our stream
     _firebaseAuth.authStateChanges().listen((firebaseUser) async {
       if (firebaseUser != null) {
@@ -45,7 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       // Check if we have internet connection
       final hasConnection = await _networkInfo.isConnected;
-      
+
       if (hasConnection) {
         // If online, try to get user from Firebase
         final firebaseUser = _firebaseAuth.currentUser;
@@ -56,7 +56,7 @@ class AuthRepositoryImpl implements AuthRepository {
           return userModel;
         }
       }
-      
+
       // If offline or no Firebase user, try to get from local database
       return await _localDataSource.getLastLoggedInUser();
     } catch (e) {
@@ -78,27 +78,30 @@ class AuthRepositoryImpl implements AuthRepository {
         }
         throw Exception('No internet connection and no local user found');
       }
-      
+
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      
+
       if (googleUser == null) {
         throw Exception('Google sign in was cancelled');
       }
-      
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-      
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
       final credential = firebase_auth.GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      
-      final userCredential = await _firebaseAuth.signInWithCredential(credential);
+
+      final userCredential = await _firebaseAuth.signInWithCredential(
+        credential,
+      );
       final firebaseUser = userCredential.user;
-      
+
       if (firebaseUser == null) {
         throw Exception('Failed to sign in with Google');
       }
-      
+
       final userModel = _mapFirebaseUserToUserModel(firebaseUser);
       // Save to local database
       await _localDataSource.saveUser(userModel);
@@ -113,13 +116,7 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       // We don't delete the local user data to allow for offline login later
       // Just sign out from Firebase and Google
-      final hasConnection = await _networkInfo.isConnected;
-      if (hasConnection) {
-        await Future.wait([
-          _firebaseAuth.signOut(),
-          _googleSignIn.signOut(),
-        ]);
-      }
+      await Future.wait([_firebaseAuth.signOut(), _googleSignIn.signOut()]);
     } catch (e) {
       throw Exception('Failed to sign out: ${e.toString()}');
     }
@@ -130,8 +127,11 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final currentUser = await getCurrentUser();
       if (currentUser != null) {
-        await _localDataSource.updateUserThemePreference(currentUser.id, preference);
-        
+        await _localDataSource.updateUserThemePreference(
+          currentUser.id,
+          preference,
+        );
+
         // Update our auth state stream with the new user data
         final updatedUser = currentUser.copyWith(themePreference: preference);
         _authStateController.add(updatedUser);
@@ -158,7 +158,8 @@ class AuthRepositoryImpl implements AuthRepository {
       email: firebaseUser.email ?? '',
       name: firebaseUser.displayName ?? '',
       imageUrl: firebaseUser.photoURL,
-      themePreference: ThemePreference.systemDefault, // Default value, will be overridden if stored
+      themePreference: ThemePreference
+          .systemDefault, // Default value, will be overridden if stored
     );
   }
 }

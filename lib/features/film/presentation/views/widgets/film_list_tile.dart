@@ -36,16 +36,8 @@ class FilmListTile extends StatelessWidget {
             ),
           );
         },
-        placeholder: (context, url) => Container(
-          width: 80,
-          color: Colors.grey.shade300,
-          child: Icon(Icons.movie_outlined, size: 40),
-        ),
-        errorWidget: (context, url, error) => Container(
-          width: 80,
-          color: Colors.grey.shade300,
-          child: Icon(Icons.movie_outlined, size: 40),
-        ),
+        placeholder: (context, url) => Icon(Icons.movie_outlined),
+        errorWidget: (context, url, error) => Icon(Icons.movie_outlined),
       ),
       title: Text(film.title, style: Theme.of(context).textTheme.titleMedium),
       subtitle: Text(

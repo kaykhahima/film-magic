@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../data/models/film_list_model.dart';
 import '../../viewmodels/film_viewmodel.dart';
 import 'film_promo_card.dart';
 
@@ -12,32 +12,35 @@ class FilmsPromoCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final filmViewModel = context.watch<FilmViewModel>();
-    List<FilmModel>? carouselFilms = filmViewModel.upcomingFilms?.results;
-    if (carouselFilms == null || carouselFilms.isEmpty) {
-      return const SizedBox.shrink();
-    }
 
-    return ExpandableCarousel(
-      options: ExpandableCarouselOptions(
-        viewportFraction: 1.0,
-        autoPlay: true,
-        showIndicator: false,
-        enableInfiniteScroll: true,
-        autoPlayInterval: const Duration(seconds: 4),
-        slideIndicator: CircularStaticIndicator(
-          slideIndicatorOptions: SlideIndicatorOptions(
-            alignment: Alignment.bottomRight,
-            indicatorRadius: 5.0,
-            itemSpacing: 15.0,
-            currentIndicatorColor: Colors.white,
-            indicatorBackgroundColor: Colors.white54,
-            padding: const EdgeInsets.only(right: 16, bottom: 24.0),
+    final results = filmViewModel.isLoading
+        ? filmViewModel.dummyResults
+        : filmViewModel.popularFilms?.results;
+
+    return Skeletonizer(
+      enabled: filmViewModel.isLoading || results == null || results.isEmpty,
+      child: ExpandableCarousel(
+        options: ExpandableCarouselOptions(
+          viewportFraction: 1.0,
+          autoPlay: true,
+          showIndicator: false,
+          enableInfiniteScroll: true,
+          autoPlayInterval: const Duration(seconds: 4),
+          slideIndicator: CircularStaticIndicator(
+            slideIndicatorOptions: SlideIndicatorOptions(
+              alignment: Alignment.bottomRight,
+              indicatorRadius: 5.0,
+              itemSpacing: 15.0,
+              currentIndicatorColor: Colors.white,
+              indicatorBackgroundColor: Colors.white54,
+              padding: const EdgeInsets.only(right: 16, bottom: 24.0),
+            ),
           ),
         ),
+        items: results?.reversed.map((film) {
+          return FilmPromoCard(film: film);
+        }).toList(),
       ),
-      items: carouselFilms.map((film) {
-        return FilmPromoCard(film: film);
-      }).toList(),
     );
   }
 }

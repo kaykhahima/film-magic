@@ -35,13 +35,15 @@ class ApiClient {
     try {
       final url = buildUrl(endpoint, queryParameters: queryParameters);
 
-      final response = await _httpClient.get(
-        url,
-        headers: {
-          ApiConstants.authorizationHeader: _authorizationHeader,
-          ApiConstants.acceptHeader: ApiConstants.acceptValue,
-        },
-      );
+      final response = await _httpClient
+          .get(
+            url,
+            headers: {
+              ApiConstants.authorizationHeader: _authorizationHeader,
+              ApiConstants.acceptHeader: ApiConstants.acceptValue,
+            },
+          )
+          .timeout(const Duration(seconds: 10));
 
       return _processResponse(response);
     } on SocketException {

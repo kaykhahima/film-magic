@@ -92,8 +92,7 @@ class AuthViewModel extends ChangeNotifier {
       _status = AuthStatus.authenticated;
     } catch (e) {
       _status = AuthStatus.error;
-      _errorMessage = 'Failed to sign in';
-      print(e.toString());
+      _errorMessage = 'Failed to sign in with Google. Please try again.';
     } finally {
       notifyListeners();
     }

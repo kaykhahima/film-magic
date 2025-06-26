@@ -3,6 +3,7 @@ import 'package:film_magic/core/navigation/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../../../../core/utils/app_helper.dart';
 import '../../../data/models/film_credits_model.dart';
@@ -43,26 +44,28 @@ class FilmCastList extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        CachedNetworkImage(
-                          imageUrl: AppHelper.buildImageUrl(
-                            cast.profilePath ?? '',
-                          ),
-                          imageBuilder: (context, imageProvider) {
-                            return Hero(
-                              tag: cast.id,
-                              child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage: imageProvider,
-                              ),
-                            );
-                          },
-                          placeholder: (context, url) => CircleAvatar(
-                            radius: 40,
-                            child: Icon(Icons.person, size: 40),
-                          ),
-                          errorWidget: (context, url, error) => CircleAvatar(
-                            radius: 40,
-                            child: Icon(Icons.person, size: 40),
+                        Skeleton.leaf(
+                          child: CachedNetworkImage(
+                            imageUrl: AppHelper.buildImageUrl(
+                              cast.profilePath ?? '',
+                            ),
+                            imageBuilder: (context, imageProvider) {
+                              return Hero(
+                                tag: cast.id,
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: imageProvider,
+                                ),
+                              );
+                            },
+                            placeholder: (context, url) => CircleAvatar(
+                              radius: 40,
+                              child: Icon(Icons.person, size: 40),
+                            ),
+                            errorWidget: (context, url, error) => CircleAvatar(
+                              radius: 40,
+                              child: Icon(Icons.person, size: 40),
+                            ),
                           ),
                         ),
                         const Gap(8.0),

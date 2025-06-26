@@ -19,15 +19,6 @@ class _FilmScreenState extends State<FilmScreen> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    // Load films when the screen is first created
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<FilmViewModel>().loadAllFilms();
-    });
-  }
-
-  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -37,7 +28,6 @@ class _FilmScreenState extends State<FilmScreen> {
   Widget build(BuildContext context) {
     final filmViewModel = context.watch<FilmViewModel>();
 
-    final isLoading = filmViewModel.isLoading;
     final errorMessage = filmViewModel.errorMessage;
 
     if (errorMessage != null) {
@@ -106,11 +96,7 @@ class _FilmScreenState extends State<FilmScreen> {
 
             // Results section
             Expanded(
-              child: isLoading && filmViewModel.filteredFilms.isEmpty
-                  ? const Center(child: CircularProgressIndicator())
-                  : filmViewModel.filteredFilms.isEmpty
-                  ? const Center(child: Text('No films match your filters'))
-                  : filmViewModel.selectedView.name == 'List'
+              child: filmViewModel.selectedView.name == 'List'
                   ? FilmsListView(films: filmViewModel.filteredFilms)
                   : FilmsGridView(films: filmViewModel.filteredFilms),
             ),

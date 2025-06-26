@@ -5,6 +5,7 @@ import 'package:film_magic/features/film/data/models/film_list_model.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 import '../../viewmodels/film_viewmodel.dart';
 import 'film_container.dart';
@@ -23,9 +24,11 @@ class FilmList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (films == null) {
-      return SizedBox.shrink();
-    }
+    final filmViewModel = context.watch<FilmViewModel>();
+
+    final results = isLoading
+        ? filmViewModel.dummyResults
+        : films?.results ?? [];
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,20 +47,21 @@ class FilmList extends StatelessWidget {
         Gap(8.0),
         SizedBox(
           height: 200,
-          child: isLoading
-              ? const Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: films!.results.length,
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  itemBuilder: (context, index) {
-                    final film = films!.results[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: FilmContainer(film: film),
-                    );
-                  },
-                ),
+          child: Skeletonizer(
+            enabled: isLoading || results.isEmpty,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: results.length,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              itemBuilder: (context, index) {
+                final film = results[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: FilmContainer(film: film),
+                );
+              },
+            ),
+          ),
         ),
         Gap(12.0),
       ],

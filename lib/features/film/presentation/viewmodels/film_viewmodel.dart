@@ -11,7 +11,7 @@ class FilmViewModel extends ChangeNotifier {
   FilmViewModel(this._filmRepository);
 
   // State variables
-  bool _isLoading = false;
+  bool _isLoading = true;
   String? _errorMessage;
 
   // Film lists
@@ -26,7 +26,7 @@ class FilmViewModel extends ChangeNotifier {
 
   // Filter state
   String _searchQuery = '';
-  String _selectedCategory = 'Top Rated'; // Default category
+  String _selectedCategory = 'Popular'; // Default category
   List<int> _selectedGenreIds = [];
 
   // Filter options
@@ -35,6 +35,57 @@ class FilmViewModel extends ChangeNotifier {
     'Popular',
     'Currently Playing',
     'New & Upcoming',
+  ];
+
+  List<FilmModel> get dummyResults => [
+    FilmModel(
+      adult: false,
+      backdropPath: '/path/to/backdrop.jpg',
+      genreIds: [28, 12, 878],
+      id: 123,
+      originalLanguage: 'en',
+      originalTitle: 'Original Title',
+      overview: 'Movie overview text',
+      popularity: 8.5,
+      posterPath: '/path/to/poster.jpg',
+      releaseDate: '2023-05-15',
+      title: 'Movie Title',
+      video: false,
+      voteAverage: 7.8,
+      voteCount: 1500,
+    ),
+    FilmModel(
+      adult: false,
+      backdropPath: '/path/to/backdrop.jpg',
+      genreIds: [28, 12, 878],
+      id: 124,
+      originalLanguage: 'en',
+      originalTitle: 'Original Title',
+      overview: 'Movie overview text',
+      popularity: 8.5,
+      posterPath: '/path/to/poster.jpg',
+      releaseDate: '2023-05-15',
+      title: 'Movie Title',
+      video: false,
+      voteAverage: 7.8,
+      voteCount: 1500,
+    ),
+    FilmModel(
+      adult: false,
+      backdropPath: '/path/to/backdrop.jpg',
+      genreIds: [28, 12, 878],
+      id: 124,
+      originalLanguage: 'en',
+      originalTitle: 'Original Title',
+      overview: 'Movie overview text',
+      popularity: 8.5,
+      posterPath: '/path/to/poster.jpg',
+      releaseDate: '2023-05-15',
+      title: 'Movie Title',
+      video: false,
+      voteAverage: 7.8,
+      voteCount: 1500,
+    ),
   ];
 
   // Getters
@@ -136,7 +187,7 @@ class FilmViewModel extends ChangeNotifier {
 
   void clearFilters() {
     _searchQuery = '';
-    _selectedCategory = 'Top Rated';
+    _selectedCategory = 'Popular';
     _selectedGenreIds = [];
     notifyListeners();
   }
